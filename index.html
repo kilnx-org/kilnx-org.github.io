@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kilnx – The Backend Language for the htmx Era</title>
+  <meta name="description" content="Declarative backend language. SQL as first-class citizen, HTML as native output, htmx-aware. 29 keywords. Single binary. Zero config.">
+  <meta property="og:title" content="Kilnx – The Backend Language for the htmx Era">
+  <meta property="og:description" content="Declarative backend language. SQL as first-class citizen, HTML as native output, htmx-aware. 29 keywords. Single binary.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<!-- ── Nav ── -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a href="/" class="nav-logo">
+        <img src="logos/kilnx-icon.svg" alt="" style="filter:invert(1)">
+        <img src="logos/kilnx-text.svg" alt="Kilnx" style="filter:invert(1)">
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#keywords">Language</a>
+        <a href="#philosophy">Philosophy</a>
+        <a href="https://github.com/kilnx-org">GitHub</a>
+        <a href="https://discord.gg/AJcw5eee54">Discord</a>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="https://discord.gg/AJcw5eee54" class="nav-icon-link">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286z"/></svg>
+      </a>
+      <a href="https://github.com/kilnx-org/kilnx" class="nav-icon-link">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      </a>
+      <a href="#get-started" class="btn-nav">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero-bg grid-pattern"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="anim">
+      <span class="badge">
+        <span class="badge-dot pulse"></span>
+        Currently in development
+      </span>
+    </div>
+
+    <h1 class="anim anim-d1">
+      <span class="gradient-text">The backend language</span><br>
+      <span class="gradient-text">for the </span><span class="gradient-text-accent">htmx era</span>
+    </h1>
+
+    <p class="hero-desc anim anim-d2">
+      Declarative backend programming. SQL as first-class citizen, HTML as
+      native output, htmx-aware. 29 keywords. Single binary. Zero config.
+    </p>
+
+    <div class="hero-buttons anim anim-d3">
+      <a href="#get-started" class="btn-primary">
+        Get Started
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+      </a>
+      <a href="https://github.com/kilnx-org/kilnx" class="btn-outline">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        View on GitHub
+      </a>
+      <a href="https://discord.gg/AJcw5eee54" class="btn-outline">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286z"/></svg>
+        Join Discord
+      </a>
+    </div>
+
+    <!-- Hero Code Preview -->
+    <div class="anim anim-d4" style="margin-top:5rem">
+      <div class="code-block glow">
+        <div class="code-header">
+          <div style="display:flex;align-items:center;gap:0.5rem">
+            <div class="code-dots"><div class="code-dot code-dot-r"></div><div class="code-dot code-dot-y"></div><div class="code-dot code-dot-g"></div></div>
+            <span style="margin-left:0.5rem">app.kilnx</span>
+          </div>
+          <span>A complete app in one file</span>
+        </div>
+        <pre class="code-body"><span class="kw">config</span> {
+  <span class="prop">port</span>: <span class="num">3000</span>
+  <span class="prop">db</span>: <span class="str">"postgres://localhost/myapp"</span>
+}
+
+<span class="kw">model</span> <span class="typ">Task</span> {
+  <span class="prop">title</span>     <span class="typ">string</span>  <span class="attr">required</span>
+  <span class="prop">done</span>      <span class="typ">bool</span>    <span class="attr">default</span>: <span class="num">false</span>
+  <span class="prop">created</span>   <span class="typ">datetime</span> <span class="attr">auto</span>
+}
+
+<span class="kw">page</span> <span class="str">"/tasks"</span> {
+  <span class="kw">query</span> tasks = <span class="typ">Task</span>.<span class="fn">all</span>(<span class="prop">order</span>: <span class="str">"created desc"</span>)
+  <span class="kw">form</span>  <span class="typ">Task</span>.<span class="fn">create</span>()
+}
+
+<span class="kw">action</span> <span class="str">"/tasks/:id/toggle"</span> {
+  <span class="kw">query</span> task = <span class="typ">Task</span>.<span class="fn">find</span>(<span class="prop">id</span>)
+  task.<span class="prop">done</span> = !task.<span class="prop">done</span>
+  task.<span class="fn">save</span>()
+}</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Before / After ── -->
+<section id="comparison">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:4rem">
+      <p class="section-label">Before &amp; After</p>
+      <h2 class="section-title gradient-text">Same app. Less everything.</h2>
+      <p class="section-desc centered">
+        A task manager with auth, CRUD, and real-time updates.
+        One requires a stack. The other requires Kilnx.
+      </p>
+    </div>
+
+    <div class="comparison">
+      <!-- Before -->
+      <div class="before-block">
+        <span class="comparison-label comparison-label-muted">Traditional Stack</span>
+        <div class="code-block">
+          <div class="code-header">
+            <span>Express + Prisma + EJS + Passport</span>
+            <span>~12 files, ~480 lines</span>
+          </div>
+          <div class="code-body" style="color:var(--text-muted);line-height:1.6">
+            <div>
+              <small style="color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.05em">package.json</small>
+              <pre style="margin-top:0.25rem"><span class="str">"express"</span>, <span class="str">"prisma"</span>, <span class="str">"@prisma/client"</span>,
+<span class="str">"ejs"</span>, <span class="str">"passport"</span>, <span class="str">"passport-local"</span>,
+<span class="str">"express-session"</span>, <span class="str">"csurf"</span>, <span class="str">"bcrypt"</span>,
+<span class="str">"express-validator"</span>, <span class="str">"connect-flash"</span>
+<span class="cmt">// 11 dependencies</span></pre>
+            </div>
+            <hr style="border:0;border-top:1px solid var(--border);margin:1rem 0;opacity:0.5">
+            <div>
+              <small style="color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.05em">schema.prisma</small>
+              <pre style="margin-top:0.25rem"><span class="kw">model</span> <span class="typ">Task</span> {
+  id        <span class="typ">Int</span>      <span class="attr">@id</span> <span class="attr">@default</span>(<span class="fn">autoincrement</span>())
+  title     <span class="typ">String</span>
+  done      <span class="typ">Boolean</span>  <span class="attr">@default</span>(<span class="num">false</span>)
+  createdAt <span class="typ">DateTime</span> <span class="attr">@default</span>(<span class="fn">now</span>())
+  userId    <span class="typ">Int</span>
+  user      <span class="typ">User</span>     <span class="attr">@relation</span>(...)
+}</pre>
+            </div>
+            <hr style="border:0;border-top:1px solid var(--border);margin:1rem 0;opacity:0.5">
+            <div>
+              <small style="color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.05em">routes/tasks.js</small>
+              <pre style="margin-top:0.25rem"><span class="kw">const</span> router = <span class="fn">express</span>.<span class="fn">Router</span>()
+router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="fn">ensureAuth</span>, <span class="kw">async</span> (req, res) =&gt; {
+  <span class="kw">const</span> tasks = <span class="kw">await</span> prisma.task.<span class="fn">findMany</span>({
+    where: { userId: req.user.id },
+    orderBy: { createdAt: <span class="str">'desc'</span> }
+  })
+  res.<span class="fn">render</span>(<span class="str">'tasks/index'</span>, { tasks })
+})
+<span class="cmt">// + POST, PUT, DELETE handlers</span>
+<span class="cmt">// + validation middleware</span>
+<span class="cmt">// + error handling</span></pre>
+            </div>
+            <hr style="border:0;border-top:1px solid var(--border);margin:1rem 0;opacity:0.5">
+            <div style="font-size:0.8125rem">
+              <span class="cmt">// + views/tasks/index.ejs</span><br>
+              <span class="cmt">// + views/layout.ejs</span><br>
+              <span class="cmt">// + config/passport.js</span><br>
+              <span class="cmt">// + middleware/auth.js</span><br>
+              <span class="cmt">// + middleware/csrf.js</span><br>
+              <span class="cmt">// + prisma/migrations/...</span><br>
+              <span class="cmt">// + app.js (server setup)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- After -->
+      <div class="after-block">
+        <span class="comparison-label comparison-label-accent">Kilnx</span>
+        <div class="code-block glow">
+          <div class="code-header">
+            <span>app.kilnx</span>
+            <span style="color:var(--accent);font-weight:500">1 file, 32 lines</span>
+          </div>
+          <pre class="code-body"><span class="kw">config</span> {
+  <span class="prop">port</span>: <span class="num">3000</span>
+  <span class="prop">db</span>:   <span class="str">"postgres://localhost/myapp"</span>
+}
+
+<span class="kw">auth</span> {
+  <span class="prop">provider</span>: <span class="str">"email"</span>
+  <span class="prop">session</span>:  <span class="str">"cookie"</span>
+}
+
+<span class="kw">model</span> <span class="typ">Task</span> {
+  <span class="prop">title</span>     <span class="typ">string</span>   <span class="attr">required</span>
+  <span class="prop">done</span>      <span class="typ">bool</span>     <span class="attr">default</span>: <span class="num">false</span>
+  <span class="prop">created</span>   <span class="typ">datetime</span>  <span class="attr">auto</span>
+  <span class="prop">owner</span>     <span class="typ">User</span>     <span class="attr">relation</span>
+}
+
+<span class="kw">permissions</span> <span class="typ">Task</span> {
+  <span class="prop">owner</span>: <span class="str">"all"</span>
+}
+
+<span class="kw">page</span> <span class="str">"/tasks"</span> {
+  <span class="kw">query</span> tasks = <span class="typ">Task</span>.<span class="fn">all</span>(<span class="prop">order</span>: <span class="str">"created desc"</span>)
+  <span class="kw">form</span>  <span class="typ">Task</span>.<span class="fn">create</span>()
+}
+
+<span class="kw">action</span> <span class="str">"/tasks/:id/toggle"</span> {
+  <span class="kw">query</span> task = <span class="typ">Task</span>.<span class="fn">find</span>(<span class="prop">id</span>)
+  task.<span class="prop">done</span> = !task.<span class="prop">done</span>
+  task.<span class="fn">save</span>()
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <p class="stat-label">Dependencies</p>
+        <div class="stat-values">
+          <span class="stat-before">11</span>
+          <span class="stat-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></span>
+          <span class="stat-after">0</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <p class="stat-label">Files</p>
+        <div class="stat-values">
+          <span class="stat-before">12+</span>
+          <span class="stat-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></span>
+          <span class="stat-after">1</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <p class="stat-label">Lines of code</p>
+        <div class="stat-values">
+          <span class="stat-before">~480</span>
+          <span class="stat-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></span>
+          <span class="stat-after">32</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <p class="stat-label">Config files</p>
+        <div class="stat-values">
+          <span class="stat-before">5</span>
+          <span class="stat-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></span>
+          <span class="stat-after">0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Features ── -->
+<section id="features">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:5rem">
+      <p class="section-label">Features</p>
+      <h2 class="section-title gradient-text">Everything you need,<br>nothing you don't</h2>
+      <p class="section-desc centered">
+        29 keywords replace an entire stack. Models, pages, actions,
+        auth, jobs, emails, websockets, API endpoints.
+      </p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"/></svg></div>
+        <h3>SQL First-Class</h3>
+        <p>No ORM, no query builder. Write SQL directly or let the model generate it. Your database is a feature, not an afterthought.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg></div>
+        <h3>HTML Native Output</h3>
+        <p>HTML is the return type. Pages, fragments, and layouts compose naturally. No template engine bolted on.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg></div>
+        <h3>htmx-Aware</h3>
+        <p>Fragments, actions, and streams are built-in. Partial HTML updates without writing JavaScript.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-2.25-1.313M21 7.5v2.25m0-2.25l-2.25 1.313M3 7.5l2.25-1.313M3 7.5l2.25 1.313M3 7.5v2.25m9 3l2.25-1.313M12 12.75l-2.25-1.313M12 12.75V15m0 6.75l2.25-1.313M12 21.75V19.5m0 2.25l-2.25-1.313m0-16.875L12 2.25l2.25 1.313M21 14.25v2.25l-2.25 1.313m-13.5 0L3 16.5v-2.25"/></svg></div>
+        <h3>Single Binary</h3>
+        <p>Compiles to one executable. No runtime, no dependencies, no node_modules. The binary is the deploy.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg></div>
+        <h3>Security by Default</h3>
+        <p>Auth, permissions, CSRF, and input validation are built-in keywords. Security is not opt-in.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/></svg></div>
+        <h3>Zero Config</h3>
+        <p>No framework to choose, no ORM to configure, no template engine to wire up. One file can be a complete app.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Keywords Interactive ── -->
+<section id="keywords">
+  <div class="container">
+    <div class="keywords-layout">
+      <div class="keywords-left">
+        <p class="section-label">The entire language</p>
+        <h2 class="section-title gradient-text">29 keywords</h2>
+        <p class="section-desc">
+          Each keyword maps to a backend concept you use every day.
+          Click one to see it in action.
+        </p>
+        <div class="keywords-cloud" id="keywords-cloud"></div>
+      </div>
+
+      <div class="terminal" id="terminal">
+        <div class="terminal-header">
+          <div class="code-dots"><div class="code-dot code-dot-r"></div><div class="code-dot code-dot-y"></div><div class="code-dot code-dot-g"></div></div>
+          <span class="terminal-title">kilnx explain</span>
+        </div>
+        <div class="terminal-body" id="terminal-body">
+          <div><span class="terminal-prompt">$</span> kilnx explain <span class="terminal-cursor"></span></div>
+          <p class="terminal-desc" style="margin-top:2rem;opacity:0.5">
+            Click a keyword to explore the language.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Keyword templates (hidden, swapped into terminal via JS) ── -->
+<div id="keyword-templates" hidden>
+  <template id="tpl-config"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">config</span></div><div class="terminal-keyword" style="margin-top:1.25rem">config</div><p class="terminal-desc">Application-level settings. Port, database connection, environment.</p><div class="terminal-example"><pre><span class="kw">config</span> {
+  <span class="prop">port</span>: <span class="num">3000</span>
+  <span class="prop">db</span>: <span class="str">"postgres://localhost/myapp"</span>
+  <span class="prop">env</span>: <span class="str">"production"</span>
+}</pre></div></template>
+
+  <template id="tpl-model"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">model</span></div><div class="terminal-keyword" style="margin-top:1.25rem">model</div><p class="terminal-desc">Single source of truth. Defines types once, generates CREATE TABLE, validation, forms, and listing fragments.</p><div class="terminal-example"><pre><span class="kw">model</span> <span class="typ">Post</span> {
+  <span class="prop">title</span>    <span class="typ">string</span>   <span class="attr">required</span> <span class="attr">max</span>: <span class="num">200</span>
+  <span class="prop">body</span>     <span class="typ">text</span>     <span class="attr">required</span>
+  <span class="prop">slug</span>     <span class="typ">string</span>   <span class="attr">unique</span> <span class="attr">auto</span>
+  <span class="prop">author</span>   <span class="typ">User</span>     <span class="attr">relation</span>
+  <span class="prop">created</span>  <span class="typ">datetime</span> <span class="attr">auto</span>
+}</pre></div></template>
+
+  <template id="tpl-permissions"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">permissions</span></div><div class="terminal-keyword" style="margin-top:1.25rem">permissions</div><p class="terminal-desc">Declarative access control. Define who can do what, scoped to models.</p><div class="terminal-example"><pre><span class="kw">permissions</span> <span class="typ">Post</span> {
+  <span class="prop">author</span>: <span class="str">"all"</span>
+  <span class="prop">admin</span>:  <span class="str">"all"</span>
+  <span class="prop">public</span>: <span class="str">"read"</span>
+}</pre></div></template>
+
+  <template id="tpl-auth"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">auth</span></div><div class="terminal-keyword" style="margin-top:1.25rem">auth</div><p class="terminal-desc">Authentication in a few lines. Providers, sessions, expiry.</p><div class="terminal-example"><pre><span class="kw">auth</span> {
+  <span class="prop">provider</span>: <span class="str">"email"</span>
+  <span class="prop">session</span>:  <span class="str">"cookie"</span>
+  <span class="prop">expires</span>:  <span class="str">"7d"</span>
+}</pre></div></template>
+
+  <template id="tpl-layout"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">layout</span></div><div class="terminal-keyword" style="margin-top:1.25rem">layout</div><p class="terminal-desc">Wrapping HTML structure shared across pages. Head, nav, footer.</p><div class="terminal-example"><pre><span class="kw">layout</span> <span class="str">"main"</span> {
+  &lt;<span class="typ">html</span>&gt;
+    &lt;<span class="typ">head</span>&gt; &lt;<span class="typ">title</span>&gt;{title}&lt;/<span class="typ">title</span>&gt; &lt;/<span class="typ">head</span>&gt;
+    &lt;<span class="typ">body</span>&gt; {slot} &lt;/<span class="typ">body</span>&gt;
+  &lt;/<span class="typ">html</span>&gt;
+}</pre></div></template>
+
+  <template id="tpl-page"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">page</span></div><div class="terminal-keyword" style="margin-top:1.25rem">page</div><p class="terminal-desc">A full page route. Queries data, renders HTML, handles forms.</p><div class="terminal-example"><pre><span class="kw">page</span> <span class="str">"/posts"</span> {
+  <span class="kw">query</span> posts = <span class="typ">Post</span>.<span class="fn">all</span>(<span class="prop">order</span>: <span class="str">"created desc"</span>)
+  <span class="kw">paginate</span> <span class="num">20</span>
+  <span class="kw">search</span> [<span class="prop">title</span>, <span class="prop">body</span>]
+}</pre></div></template>
+
+  <template id="tpl-action"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">action</span></div><div class="terminal-keyword" style="margin-top:1.25rem">action</div><p class="terminal-desc">Server-side mutation triggered by a request. Update, delete, toggle.</p><div class="terminal-example"><pre><span class="kw">action</span> <span class="str">"/posts/:id/publish"</span> {
+  <span class="kw">query</span> post = <span class="typ">Post</span>.<span class="fn">find</span>(<span class="prop">id</span>)
+  post.<span class="prop">published</span> = <span class="num">true</span>
+  post.<span class="fn">save</span>()
+  <span class="kw">redirect</span> <span class="str">"/posts"</span>
+}</pre></div></template>
+
+  <template id="tpl-fragment"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">fragment</span></div><div class="terminal-keyword" style="margin-top:1.25rem">fragment</div><p class="terminal-desc">Partial HTML for htmx swaps. First-class fragments that render without a full page.</p><div class="terminal-example"><pre><span class="kw">fragment</span> <span class="str">"task-item"</span> {
+  &lt;<span class="typ">li</span> id=<span class="str">"task-{id}"</span>&gt;
+    &lt;<span class="typ">span</span>&gt;{title}&lt;/<span class="typ">span</span>&gt;
+    &lt;<span class="typ">button</span> hx-post=<span class="str">"/tasks/{id}/toggle"</span>&gt;
+      Toggle
+    &lt;/<span class="typ">button</span>&gt;
+  &lt;/<span class="typ">li</span>&gt;
+}</pre></div></template>
+
+  <template id="tpl-stream"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">stream</span></div><div class="terminal-keyword" style="margin-top:1.25rem">stream</div><p class="terminal-desc">Server-Sent Events endpoint. Push HTML fragments to connected clients in real-time.</p><div class="terminal-example"><pre><span class="kw">stream</span> <span class="str">"/notifications"</span> {
+  <span class="kw">on</span> <span class="typ">Message</span>.<span class="fn">create</span> {
+    <span class="kw">fragment</span> <span class="str">"notification-item"</span>
+    <span class="kw">broadcast</span> <span class="prop">to</span>: message.<span class="prop">recipient</span>
+  }
+}</pre></div></template>
+
+  <template id="tpl-socket"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">socket</span></div><div class="terminal-keyword" style="margin-top:1.25rem">socket</div><p class="terminal-desc">WebSocket endpoint for bidirectional real-time communication.</p><div class="terminal-example"><pre><span class="kw">socket</span> <span class="str">"/chat"</span> {
+  <span class="kw">on</span> <span class="str">"message"</span> {
+    <span class="kw">broadcast</span> <span class="kw">fragment</span> <span class="str">"chat-bubble"</span>
+  }
+}</pre></div></template>
+
+  <template id="tpl-component"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">component</span></div><div class="terminal-keyword" style="margin-top:1.25rem">component</div><p class="terminal-desc">Reusable HTML block with parameters. Compose pages from components.</p><div class="terminal-example"><pre><span class="kw">component</span> <span class="str">"avatar"</span> (<span class="prop">user</span>: <span class="typ">User</span>, <span class="prop">size</span>: <span class="typ">string</span>) {
+  &lt;<span class="typ">img</span> src=<span class="str">"{user.avatar}"</span>
+       class=<span class="str">"avatar-{size}"</span> /&gt;
+}</pre></div></template>
+
+  <template id="tpl-api"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">api</span></div><div class="terminal-keyword" style="margin-top:1.25rem">api</div><p class="terminal-desc">JSON API endpoint. REST-style with permissions and automatic serialization.</p><div class="terminal-example"><pre><span class="kw">api</span> <span class="str">"/api/posts"</span> {
+  <span class="kw">permissions</span> <span class="str">"authenticated"</span>
+  <span class="prop">GET</span>    = <span class="typ">Post</span>.<span class="fn">all</span>(<span class="prop">owner</span>: <span class="prop">current_user</span>)
+  <span class="prop">POST</span>   = <span class="typ">Post</span>.<span class="fn">create</span>(<span class="prop">owner</span>: <span class="prop">current_user</span>)
+  <span class="prop">DELETE</span> = <span class="typ">Post</span>.<span class="fn">destroy</span>(<span class="prop">owner</span>: <span class="prop">current_user</span>)
+}</pre></div></template>
+
+  <template id="tpl-webhook"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">webhook</span></div><div class="terminal-keyword" style="margin-top:1.25rem">webhook</div><p class="terminal-desc">Receive external HTTP callbacks. Stripe, GitHub, Twilio.</p><div class="terminal-example"><pre><span class="kw">webhook</span> <span class="str">"/webhooks/stripe"</span> {
+  <span class="kw">validate</span> <span class="prop">header</span>: <span class="str">"Stripe-Signature"</span>
+  <span class="kw">on</span> <span class="str">"payment_intent.succeeded"</span> {
+    <span class="kw">query</span> order = <span class="typ">Order</span>.<span class="fn">find</span>(<span class="prop">stripe_id</span>)
+    order.<span class="prop">paid</span> = <span class="num">true</span>
+    order.<span class="fn">save</span>()
+  }
+}</pre></div></template>
+
+  <template id="tpl-schedule"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">schedule</span></div><div class="terminal-keyword" style="margin-top:1.25rem">schedule</div><p class="terminal-desc">Cron-based recurring tasks. Reports, cleanup, syncs.</p><div class="terminal-example"><pre><span class="kw">schedule</span> <span class="str">"daily-report"</span> {
+  <span class="prop">cron</span>: <span class="str">"0 8 * * *"</span>
+  <span class="kw">query</span> users = <span class="typ">User</span>.<span class="fn">all</span>(<span class="prop">active</span>: <span class="num">true</span>)
+  <span class="kw">send email</span> <span class="str">"daily-digest"</span> <span class="prop">to</span>: users
+}</pre></div></template>
+
+  <template id="tpl-job"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">job</span></div><div class="terminal-keyword" style="margin-top:1.25rem">job</div><p class="terminal-desc">Background task that runs asynchronously. Enqueued from actions or schedules.</p><div class="terminal-example"><pre><span class="kw">job</span> <span class="str">"process-upload"</span> (<span class="prop">file</span>: <span class="typ">Upload</span>) {
+  <span class="kw">log</span> <span class="str">"Processing {file.name}"</span>
+  file.<span class="fn">transform</span>()
+  file.<span class="prop">status</span> = <span class="str">"ready"</span>
+  file.<span class="fn">save</span>()
+}</pre></div></template>
+
+  <template id="tpl-query"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">query</span></div><div class="terminal-keyword" style="margin-top:1.25rem">query</div><p class="terminal-desc">Fetch data from the database. SQL generated from model definitions.</p><div class="terminal-example"><pre><span class="kw">query</span> recent_posts = <span class="typ">Post</span>.<span class="fn">all</span>(
+  <span class="prop">published</span>: <span class="num">true</span>,
+  <span class="prop">order</span>: <span class="str">"created desc"</span>,
+  <span class="prop">limit</span>: <span class="num">10</span>
+)</pre></div></template>
+
+  <template id="tpl-validate"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">validate</span></div><div class="terminal-keyword" style="margin-top:1.25rem">validate</div><p class="terminal-desc">Custom validation rules beyond type constraints. Server-side, always.</p><div class="terminal-example"><pre><span class="kw">validate</span> <span class="typ">User</span> {
+  <span class="prop">email</span>: <span class="fn">matches</span>(<span class="str">"*@*.*"</span>)
+  <span class="prop">age</span>:   <span class="fn">between</span>(<span class="num">13</span>, <span class="num">150</span>)
+  <span class="prop">username</span>: <span class="fn">unique</span>, <span class="fn">min</span>(<span class="num">3</span>)
+}</pre></div></template>
+
+  <template id="tpl-search"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">search</span></div><div class="terminal-keyword" style="margin-top:1.25rem">search</div><p class="terminal-desc">Full-text search on model fields. No external service needed.</p><div class="terminal-example"><pre><span class="kw">page</span> <span class="str">"/posts"</span> {
+  <span class="kw">query</span> posts = <span class="typ">Post</span>.<span class="fn">all</span>()
+  <span class="kw">search</span> [<span class="prop">title</span>, <span class="prop">body</span>]
+}</pre></div></template>
+
+  <template id="tpl-paginate"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">paginate</span></div><div class="terminal-keyword" style="margin-top:1.25rem">paginate</div><p class="terminal-desc">Automatic pagination with page controls. Works with htmx out of the box.</p><div class="terminal-example"><pre><span class="kw">page</span> <span class="str">"/users"</span> {
+  <span class="kw">query</span> users = <span class="typ">User</span>.<span class="fn">all</span>()
+  <span class="kw">paginate</span> <span class="num">25</span>
+}</pre></div></template>
+
+  <template id="tpl-form"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">form</span></div><div class="terminal-keyword" style="margin-top:1.25rem">form</div><p class="terminal-desc">Auto-generated HTML form from model. Validation, CSRF, error display included.</p><div class="terminal-example"><pre><span class="kw">page</span> <span class="str">"/posts/new"</span> {
+  <span class="kw">form</span> <span class="typ">Post</span>.<span class="fn">create</span>()
+}
+
+<span class="cmt">// Generates: &lt;form&gt; with all fields,</span>
+<span class="cmt">// validation, CSRF token, error messages</span></pre></div></template>
+
+  <template id="tpl-send_email"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">send email</span></div><div class="terminal-keyword" style="margin-top:1.25rem">send email</div><p class="terminal-desc">Send transactional emails. Templates with model data, queued delivery.</p><div class="terminal-example"><pre><span class="kw">send email</span> <span class="str">"welcome"</span> {
+  <span class="prop">to</span>: user.<span class="prop">email</span>
+  <span class="prop">subject</span>: <span class="str">"Welcome to {app.name}"</span>
+  <span class="prop">body</span>: <span class="kw">fragment</span> <span class="str">"welcome-email"</span>
+}</pre></div></template>
+
+  <template id="tpl-redirect"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">redirect</span></div><div class="terminal-keyword" style="margin-top:1.25rem">redirect</div><p class="terminal-desc">HTTP redirect after an action. Clean control flow.</p><div class="terminal-example"><pre><span class="kw">action</span> <span class="str">"/logout"</span> {
+  <span class="fn">session.destroy</span>()
+  <span class="kw">redirect</span> <span class="str">"/"</span>
+}</pre></div></template>
+
+  <template id="tpl-on"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">on</span></div><div class="terminal-keyword" style="margin-top:1.25rem">on</div><p class="terminal-desc">Event hook. React to model lifecycle events or custom triggers.</p><div class="terminal-example"><pre><span class="kw">on</span> <span class="typ">User</span>.<span class="fn">create</span> {
+  <span class="kw">send email</span> <span class="str">"welcome"</span> <span class="prop">to</span>: user
+  <span class="kw">enqueue</span> <span class="str">"setup-defaults"</span>(<span class="prop">user</span>: user)
+}</pre></div></template>
+
+  <template id="tpl-limit"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">limit</span></div><div class="terminal-keyword" style="margin-top:1.25rem">limit</div><p class="terminal-desc">Rate limiting on routes. Protect endpoints from abuse.</p><div class="terminal-example"><pre><span class="kw">api</span> <span class="str">"/api/login"</span> {
+  <span class="kw">limit</span> <span class="num">5</span> <span class="prop">per</span>: <span class="str">"minute"</span>
+}</pre></div></template>
+
+  <template id="tpl-log"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">log</span></div><div class="terminal-keyword" style="margin-top:1.25rem">log</div><p class="terminal-desc">Structured logging. Debug, info, warn, error levels.</p><div class="terminal-example"><pre><span class="kw">action</span> <span class="str">"/admin/reset"</span> {
+  <span class="kw">log</span> <span class="str">"Admin reset by {current_user.email}"</span>
+}</pre></div></template>
+
+  <template id="tpl-test"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">test</span></div><div class="terminal-keyword" style="margin-top:1.25rem">test</div><p class="terminal-desc">Built-in testing. Assert HTTP responses, model state, fragments.</p><div class="terminal-example"><pre><span class="kw">test</span> <span class="str">"create task"</span> {
+  <span class="fn">POST</span> <span class="str">"/tasks"</span> { <span class="prop">title</span>: <span class="str">"Buy milk"</span> }
+  <span class="fn">assert</span> <span class="prop">status</span> <span class="num">201</span>
+  <span class="fn">assert</span> <span class="typ">Task</span>.<span class="fn">count</span> == <span class="num">1</span>
+}</pre></div></template>
+
+  <template id="tpl-translations"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">translations</span></div><div class="terminal-keyword" style="margin-top:1.25rem">translations</div><p class="terminal-desc">i18n built into the language. Define translations, use them in pages.</p><div class="terminal-example"><pre><span class="kw">translations</span> {
+  <span class="prop">en</span>: { <span class="prop">greeting</span>: <span class="str">"Hello"</span> }
+  <span class="prop">pt</span>: { <span class="prop">greeting</span>: <span class="str">"Ola"</span> }
+}</pre></div></template>
+
+  <template id="tpl-enqueue"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">enqueue</span></div><div class="terminal-keyword" style="margin-top:1.25rem">enqueue</div><p class="terminal-desc">Push work to a background job queue. Fire-and-forget from actions.</p><div class="terminal-example"><pre><span class="kw">action</span> <span class="str">"/uploads"</span> {
+  <span class="kw">query</span> file = <span class="typ">Upload</span>.<span class="fn">create</span>()
+  <span class="kw">enqueue</span> <span class="str">"process-upload"</span>(<span class="prop">file</span>: file)
+  <span class="kw">redirect</span> <span class="str">"/uploads"</span>
+}</pre></div></template>
+
+  <template id="tpl-broadcast"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">broadcast</span></div><div class="terminal-keyword" style="margin-top:1.25rem">broadcast</div><p class="terminal-desc">Push a fragment to connected clients via SSE or WebSocket.</p><div class="terminal-example"><pre><span class="kw">action</span> <span class="str">"/messages"</span> {
+  <span class="kw">query</span> msg = <span class="typ">Message</span>.<span class="fn">create</span>()
+  <span class="kw">broadcast</span> <span class="kw">fragment</span> <span class="str">"message-item"</span>
+    <span class="prop">to</span>: msg.<span class="prop">channel</span>
+}</pre></div></template>
+</div>
+
+<!-- ── Philosophy ── -->
+<section id="philosophy">
+  <div class="container">
+    <div class="philosophy-grid">
+      <div>
+        <p class="section-label">Philosophy</p>
+        <h2 class="section-title gradient-text" style="line-height:1.15">11 design<br>principles</h2>
+        <p class="section-desc">
+          htmx completed HTML. Kilnx completes htmx. Every design decision
+          serves a single goal: make the backend as simple as the problem
+          demands, not as complex as the tools allow.
+        </p>
+        <div class="philosophy-quote">
+          <span class="quote-mark">"</span>The kiln metaphor: raw
+          declarations go in, a solid binary comes out. The X suffix
+          creates visual kinship with htmx.<span class="quote-mark">"</span>
+        </div>
+      </div>
+      <div class="principles-list">
+        <div class="principle"><span class="principle-num">00</span><span class="principle-text">The complexity is the tool's fault, not the problem's</span></div>
+        <div class="principle"><span class="principle-num">01</span><span class="principle-text">Zero decisions before the first useful line</span></div>
+        <div class="principle"><span class="principle-num">02</span><span class="principle-text">SQL is first-class citizen</span></div>
+        <div class="principle"><span class="principle-num">03</span><span class="principle-text">HTML is the native output</span></div>
+        <div class="principle"><span class="principle-num">04</span><span class="principle-text">Declarative first, imperative when necessary</span></div>
+        <div class="principle"><span class="principle-num">05</span><span class="principle-text">One file can be a complete app</span></div>
+        <div class="principle"><span class="principle-num">06</span><span class="principle-text">The binary is the deploy</span></div>
+        <div class="principle"><span class="principle-num">07</span><span class="principle-text">Fragments are first-class</span></div>
+        <div class="principle"><span class="principle-num">08</span><span class="principle-text">Security is default, not opt-in</span></div>
+        <div class="principle"><span class="principle-num">09</span><span class="principle-text">Zero dependencies for the user</span></div>
+        <div class="principle"><span class="principle-num">10</span><span class="principle-text">htmx awareness without htmx coupling</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section id="get-started">
+  <div class="container">
+    <div class="cta-box">
+      <div class="cta-glow"></div>
+      <div class="cta-content">
+        <h2 class="section-title gradient-text">Ready to build?</h2>
+        <p class="section-desc centered" style="margin-left:auto;margin-right:auto">
+          Kilnx is in active development. Star the repo, follow progress,
+          or contribute to the language design.
+        </p>
+        <div class="install-cmd">
+          <div class="code-block">
+            <div class="code-body">
+              <span class="install-dollar">$</span>
+              <span>go install github.com/kilnx-org/kilnx@latest</span>
+            </div>
+          </div>
+        </div>
+        <div class="cta-links">
+          <a href="https://github.com/kilnx-org/kilnx" class="cta-link">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+          <a href="https://discord.gg/AJcw5eee54" class="cta-link">
+            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286z"/></svg>
+            Discord
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <img src="logos/kilnx-icon.svg" alt="" style="filter:invert(1)">
+      <span>Kilnx. The backend language for the htmx era.</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/kilnx-org">GitHub</a>
+      <a href="https://discord.gg/AJcw5eee54">Discord</a>
+      <a href="https://github.com/kilnx-org/kilnx/issues">Issues</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ── Keyword interaction (safe DOM manipulation, no innerHTML) ── -->
+<script>
+(function() {
+  var kwList = [
+    "config","model","permissions","auth","layout","page","action",
+    "fragment","stream","socket","component","api","webhook","schedule",
+    "job","query","validate","search","paginate","form","send email",
+    "redirect","on","limit","log","test","translations","enqueue","broadcast"
+  ];
+
+  var cloud = document.getElementById("keywords-cloud");
+  var body = document.getElementById("terminal-body");
+
+  kwList.forEach(function(kw) {
+    var btn = document.createElement("button");
+    btn.className = "keyword-tag";
+    btn.textContent = kw;
+    btn.setAttribute("data-kw", kw);
+    btn.addEventListener("click", function() { selectKeyword(kw); });
+    cloud.appendChild(btn);
+  });
+
+  function selectKeyword(kw) {
+    document.querySelectorAll(".keyword-tag").forEach(function(t) {
+      t.classList.remove("active");
+    });
+    var activeBtn = document.querySelector('[data-kw="' + kw + '"]');
+    if (activeBtn) activeBtn.classList.add("active");
+
+    var tplId = "tpl-" + kw.replace(/ /g, "_");
+    var tpl = document.getElementById(tplId);
+    if (tpl) {
+      while (body.firstChild) body.removeChild(body.firstChild);
+      body.appendChild(tpl.content.cloneNode(true));
+    }
+  }
+
+  selectKeyword("config");
+})();
+</script>
+
+</body>
+</html>
