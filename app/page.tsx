@@ -167,6 +167,111 @@ function CodePreview() {
   );
 }
 
+function BeforeAfter() {
+  return (
+    <section className="py-32 relative">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <p className="text-accent font-medium text-sm tracking-wider uppercase mb-4">
+            Before &amp; After
+          </p>
+          <h2 className="text-4xl sm:text-5xl font-bold gradient-text">
+            Same app. Less everything.
+          </h2>
+          <p className="mt-6 text-text-secondary text-lg max-w-2xl mx-auto">
+            A task manager with auth, CRUD, and real-time updates.
+            One requires a stack. The other requires Kilnx.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* BEFORE */}
+          <div className="relative">
+            <div className="absolute -top-3 left-4 z-10 px-3 py-1 rounded-full bg-bg border border-border text-xs font-medium text-text-muted">
+              Traditional Stack
+            </div>
+            <div className="code-block opacity-60">
+              <div className="code-block-header flex items-center justify-between">
+                <span>Express + Prisma + EJS + Passport</span>
+                <span className="text-text-muted text-xs">~12 files, ~480 lines</span>
+              </div>
+              <div className="p-6 text-sm font-mono leading-6 text-text-muted space-y-4 overflow-x-auto">
+                <div>
+                  <span className="text-text-secondary text-xs uppercase tracking-wider">package.json</span>
+                  <pre className="mt-1"><span className="token-string">&quot;express&quot;</span>, <span className="token-string">&quot;prisma&quot;</span>, <span className="token-string">&quot;@prisma/client&quot;</span>,{"\n"}<span className="token-string">&quot;ejs&quot;</span>, <span className="token-string">&quot;passport&quot;</span>, <span className="token-string">&quot;passport-local&quot;</span>,{"\n"}<span className="token-string">&quot;express-session&quot;</span>, <span className="token-string">&quot;csurf&quot;</span>, <span className="token-string">&quot;bcrypt&quot;</span>,{"\n"}<span className="token-string">&quot;express-validator&quot;</span>, <span className="token-string">&quot;connect-flash&quot;</span>{"\n"}<span className="token-comment">// 11 dependencies</span></pre>
+                </div>
+                <div className="border-t border-border/50 pt-4">
+                  <span className="text-text-secondary text-xs uppercase tracking-wider">schema.prisma</span>
+                  <pre className="mt-1"><span className="token-keyword">model</span> <span className="token-type">Task</span> &#123;{"\n"}  id        <span className="token-type">Int</span>      <span className="token-attr">@id</span> <span className="token-attr">@default</span>(<span className="token-function">autoincrement</span>()){"\n"}  title     <span className="token-type">String</span>{"\n"}  done      <span className="token-type">Boolean</span>  <span className="token-attr">@default</span>(<span className="token-number">false</span>){"\n"}  createdAt <span className="token-type">DateTime</span> <span className="token-attr">@default</span>(<span className="token-function">now</span>()){"\n"}  userId    <span className="token-type">Int</span>{"\n"}  user      <span className="token-type">User</span>     <span className="token-attr">@relation</span>(...){"\n"}&#125;</pre>
+                </div>
+                <div className="border-t border-border/50 pt-4">
+                  <span className="text-text-secondary text-xs uppercase tracking-wider">routes/tasks.js</span>
+                  <pre className="mt-1"><span className="token-keyword">const</span> router = <span className="token-function">express</span>.<span className="token-function">Router</span>(){"\n"}router.<span className="token-function">get</span>(<span className="token-string">&apos;/&apos;</span>, <span className="token-function">ensureAuth</span>, <span className="token-keyword">async</span> (req, res) =&gt; &#123;{"\n"}  <span className="token-keyword">const</span> tasks = <span className="token-keyword">await</span> prisma.task.<span className="token-function">findMany</span>(&#123;{"\n"}    where: &#123; userId: req.user.id &#125;,{"\n"}    orderBy: &#123; createdAt: <span className="token-string">&apos;desc&apos;</span> &#125;{"\n"}  &#125;){"\n"}  res.<span className="token-function">render</span>(<span className="token-string">&apos;tasks/index&apos;</span>, &#123; tasks &#125;){"\n"}&#125;){"\n"}<span className="token-comment">// + POST, PUT, DELETE handlers</span>{"\n"}<span className="token-comment">// + validation middleware</span>{"\n"}<span className="token-comment">// + error handling</span></pre>
+                </div>
+                <div className="border-t border-border/50 pt-4 text-text-muted text-xs">
+                  <span className="token-comment">// + views/tasks/index.ejs</span>{"\n"}
+                  <span className="token-comment">// + views/layout.ejs</span>{"\n"}
+                  <span className="token-comment">// + config/passport.js</span>{"\n"}
+                  <span className="token-comment">// + middleware/auth.js</span>{"\n"}
+                  <span className="token-comment">// + middleware/csrf.js</span>{"\n"}
+                  <span className="token-comment">// + prisma/migrations/...</span>{"\n"}
+                  <span className="token-comment">// + app.js (server setup)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* AFTER */}
+          <div className="relative">
+            <div className="absolute -top-3 left-4 z-10 px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-xs font-medium text-accent">
+              Kilnx
+            </div>
+            <div className="code-block glow">
+              <div className="code-block-header flex items-center justify-between">
+                <span>app.kilnx</span>
+                <span className="text-accent text-xs font-medium">1 file, 32 lines</span>
+              </div>
+              <pre className="p-6 text-sm leading-7 overflow-x-auto">
+                <code><span className="token-keyword">config</span>{` {\n  `}<span className="token-property">port</span>{`: `}<span className="token-number">3000</span>{`\n  `}<span className="token-property">db</span>{`:   `}<span className="token-string">"postgres://localhost/myapp"</span>{`\n}\n\n`}<span className="token-keyword">auth</span>{` {\n  `}<span className="token-property">provider</span>{`: `}<span className="token-string">"email"</span>{`\n  `}<span className="token-property">session</span>{`:  `}<span className="token-string">"cookie"</span>{`\n}\n\n`}<span className="token-keyword">model</span>{` `}<span className="token-type">Task</span>{` {\n  `}<span className="token-property">title</span>{`     `}<span className="token-type">string</span>{`   `}<span className="token-attr">required</span>{`\n  `}<span className="token-property">done</span>{`      `}<span className="token-type">bool</span>{`     `}<span className="token-attr">default</span>{`: `}<span className="token-number">false</span>{`\n  `}<span className="token-property">created</span>{`   `}<span className="token-type">datetime</span>{`  `}<span className="token-attr">auto</span>{`\n  `}<span className="token-property">owner</span>{`     `}<span className="token-type">User</span>{`     `}<span className="token-attr">relation</span>{`\n}\n\n`}<span className="token-keyword">permissions</span>{` `}<span className="token-type">Task</span>{` {\n  `}<span className="token-property">owner</span>{`: `}<span className="token-string">"all"</span>{`\n}\n\n`}<span className="token-keyword">page</span>{` `}<span className="token-string">"/tasks"</span>{` {\n  `}<span className="token-keyword">query</span>{` tasks = `}<span className="token-type">Task</span>{`.`}<span className="token-function">all</span>{`(`}<span className="token-property">order</span>{`: `}<span className="token-string">"created desc"</span>{`)\n  `}<span className="token-keyword">form</span>{`  `}<span className="token-type">Task</span>{`.`}<span className="token-function">create</span>{`()\n}\n\n`}<span className="token-keyword">action</span>{` `}<span className="token-string">"/tasks/:id/toggle"</span>{` {\n  `}<span className="token-keyword">query</span>{` task = `}<span className="token-type">Task</span>{`.`}<span className="token-function">find</span>{`(`}<span className="token-property">id</span>{`)\n  task.`}<span className="token-property">done</span>{` = !task.`}<span className="token-property">done</span>{`\n  task.`}<span className="token-function">save</span>{`()\n}`}</code>
+              </pre>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6">
+          {[
+            { label: "Dependencies", before: "11", after: "0" },
+            { label: "Files", before: "12+", after: "1" },
+            { label: "Lines of code", before: "~480", after: "32" },
+            { label: "Config files", before: "5", after: "0" },
+          ].map((stat) => (
+            <div
+              key={stat.label}
+              className="text-center p-4 rounded-xl border border-border bg-bg-elevated/30"
+            >
+              <p className="text-xs text-text-muted uppercase tracking-wider mb-3">
+                {stat.label}
+              </p>
+              <div className="flex items-center justify-center gap-3">
+                <span className="text-text-muted line-through text-lg">
+                  {stat.before}
+                </span>
+                <svg className="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+                <span className="text-accent font-bold text-lg">
+                  {stat.after}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Features() {
   const features = [
     {
@@ -555,6 +660,7 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        <BeforeAfter />
         <Features />
         <CodeExamples />
         <Philosophy />
