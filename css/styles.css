@@ -1,4 +1,4 @@
-/* ── Reset & Base ── */
+/* -- Reset & Base -- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -33,7 +33,7 @@ body {
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
 
-/* ── Utilities ── */
+/* -- Utilities -- */
 .container { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; }
 .text-center { text-align: center; }
 
@@ -62,7 +62,7 @@ img { display: block; max-width: 100%; }
   box-shadow: 0 0 80px rgba(230,74,25,0.15), 0 0 160px rgba(230,74,25,0.05);
 }
 
-/* ── Animations ── */
+/* -- Animations -- */
 @keyframes fade-in-up {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -77,7 +77,7 @@ img { display: block; max-width: 100%; }
 .anim-d4 { animation-delay: 0.4s; }
 .pulse { animation: pulse 2s cubic-bezier(0.4,0,0.6,1) infinite; }
 
-/* ── Nav ── */
+/* -- Nav -- */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 50;
   border-bottom: 1px solid rgba(39,39,42,0.5);
@@ -107,7 +107,7 @@ nav {
 }
 .nav-right a.btn-nav:hover { opacity: 0.9; color: var(--bg); }
 
-/* ── Buttons ── */
+/* -- Buttons -- */
 .btn-primary {
   display: inline-flex; align-items: center; gap: 0.5rem;
   padding: 0.75rem 1.5rem; background: var(--accent); color: white;
@@ -128,7 +128,7 @@ nav {
 .btn-outline:hover { color: var(--text); border-color: var(--border-hover); }
 .btn-outline svg { width: 1.25rem; height: 1.25rem; }
 
-/* ── Section ── */
+/* -- Section -- */
 section { padding: 8rem 0; position: relative; }
 
 .section-label {
@@ -144,11 +144,9 @@ section { padding: 8rem 0; position: relative; }
 }
 .section-desc.centered { margin-left: auto; margin-right: auto; }
 
-/* ── Hero ── */
+/* -- Hero -- */
 .hero { padding-top: 8rem; padding-bottom: 6rem; overflow: hidden; }
-.hero-bg {
-  position: absolute; inset: 0;
-}
+.hero-bg { position: absolute; inset: 0; }
 .hero-glow {
   position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
@@ -186,7 +184,7 @@ section { padding: 8rem 0; position: relative; }
   align-items: center; justify-content: center; gap: 1rem;
 }
 
-/* ── Code Block ── */
+/* -- Code Block -- */
 .code-block {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
@@ -222,7 +220,7 @@ section { padding: 8rem 0; position: relative; }
 .num { color: #ffab40; }
 .fn  { color: #80cbc4; }
 
-/* ── Feature Cards ── */
+/* -- Feature Cards -- */
 .features-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
 }
@@ -247,7 +245,7 @@ section { padding: 8rem 0; position: relative; }
 .feature-card h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem; }
 .feature-card p { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6; }
 
-/* ── Before/After ── */
+/* -- Before/After -- */
 .comparison {
   display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
 }
@@ -288,11 +286,53 @@ section { padding: 8rem 0; position: relative; }
 .stat-arrow svg { width: 1rem; height: 1rem; }
 .stat-after { color: var(--accent); font-weight: 700; font-size: 1.125rem; }
 
-/* ── Keywords Interactive ── */
+/* -- Examples Section -- */
+.example-tabs {
+  display: flex; gap: 0.5rem; margin-bottom: 2rem;
+  justify-content: center;
+}
+.example-tab {
+  padding: 0.625rem 1.25rem; border-radius: 0.5rem;
+  border: 1px solid var(--border); background: transparent;
+  font-family: var(--font-sans); font-size: 0.875rem; font-weight: 500;
+  color: var(--text-secondary); cursor: pointer;
+  transition: all 0.2s;
+}
+.example-tab:hover { color: var(--text); border-color: var(--border-hover); }
+.example-tab.active {
+  color: var(--accent); border-color: var(--accent);
+  background: var(--accent-subtle);
+}
+
+.example-panel { display: none; }
+.example-panel.active { display: block; }
+
+.example-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;
+}
+
+.example-info h3 {
+  font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;
+}
+.example-info p {
+  font-size: 1rem; color: var(--text-secondary); line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+.example-run { margin-top: 1rem; }
+
+.example-note {
+  margin-top: 1.5rem; padding: 1rem 1.5rem;
+  border-radius: 0.75rem; border: 1px solid var(--border);
+  background: rgba(17,17,19,0.3);
+}
+.example-note p {
+  font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6;
+}
+
+/* -- Keywords Interactive -- */
 .keywords-layout {
   display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;
 }
-.keywords-left {}
 .keywords-cloud {
   display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem;
 }
@@ -345,7 +385,38 @@ section { padding: 8rem 0; position: relative; }
   line-height: 1.8;
 }
 
-/* ── Philosophy ── */
+/* -- Comparison Table -- */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 0.75rem; border: 1px solid var(--border);
+  background: rgba(17,17,19,0.3);
+}
+.compare-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.compare-table th,
+.compare-table td {
+  padding: 1rem 1.25rem; text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.compare-table thead th {
+  background: var(--bg-subtle); font-weight: 600;
+  color: var(--text-secondary); font-size: 0.8125rem;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.compare-table tbody tr:last-child td { border-bottom: none; }
+.compare-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+.compare-label { color: var(--text-secondary); font-weight: 500; }
+.compare-highlight {
+  color: var(--accent); font-weight: 600;
+  background: rgba(230,74,25,0.05);
+}
+.compare-table thead th.compare-highlight {
+  color: var(--accent); background: rgba(230,74,25,0.08);
+}
+
+/* -- Philosophy -- */
 .philosophy-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
 }
@@ -375,7 +446,49 @@ section { padding: 8rem 0; position: relative; }
   transition: color 0.2s;
 }
 
-/* ── CTA ── */
+/* -- Getting Started Steps -- */
+.steps-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+}
+.step-card { text-align: center; }
+.step-number {
+  width: 2.5rem; height: 2.5rem; border-radius: 50%;
+  background: var(--accent-subtle); color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 1rem;
+  margin: 0 auto 1rem;
+  border: 1px solid rgba(230,74,25,0.3);
+}
+.step-card h3 {
+  font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem;
+}
+
+/* -- CLI Grid -- */
+.cli-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+}
+.cli-card {
+  padding: 1.25rem; border-radius: 0.75rem;
+  border: 1px solid var(--border); background: rgba(17,17,19,0.3);
+  transition: all 0.2s;
+}
+.cli-card:hover {
+  border-color: var(--border-hover); background: var(--bg-elevated);
+}
+.cli-cmd {
+  font-family: var(--font-mono); font-size: 0.875rem;
+  color: var(--accent); display: block; margin-bottom: 0.5rem;
+}
+.cli-card p {
+  font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.5;
+}
+
+/* -- Deploy Grid -- */
+.deploy-grid {
+  display: flex; gap: 1.5rem;
+}
+
+/* -- CTA -- */
 .cta-box {
   border-radius: 1rem; border: 1px solid var(--border);
   background: rgba(17,17,19,0.3); padding: 4rem;
@@ -409,7 +522,7 @@ section { padding: 8rem 0; position: relative; }
 .cta-link:hover { color: var(--text); }
 .cta-link svg { width: 1.25rem; height: 1.25rem; }
 
-/* ── Footer ── */
+/* -- Footer -- */
 footer {
   border-top: 1px solid var(--border); padding: 3rem 0;
 }
@@ -426,7 +539,7 @@ footer {
 }
 .footer-links a:hover { color: var(--text); }
 
-/* ── Responsive ── */
+/* -- Responsive -- */
 @media (max-width: 1024px) {
   .features-grid { grid-template-columns: repeat(2, 1fr); }
   .keywords-layout { grid-template-columns: 1fr; }
@@ -434,14 +547,20 @@ footer {
   .comparison { grid-template-columns: 1fr; }
   .philosophy-grid { grid-template-columns: 1fr; }
   .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .steps-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .cli-grid { grid-template-columns: repeat(2, 1fr); }
+  .deploy-grid { flex-direction: column; }
+  .example-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
   section { padding: 4rem 0; }
   .features-grid { grid-template-columns: 1fr; }
   .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .cli-grid { grid-template-columns: 1fr; }
   .hero h1 { font-size: 2.25rem; }
   .hero-buttons { flex-direction: column; }
   .nav-links { display: none; }
   .footer-inner { flex-direction: column; gap: 1.5rem; }
   .cta-box { padding: 2.5rem 1.5rem; }
+  .example-tabs { flex-wrap: wrap; }
 }
