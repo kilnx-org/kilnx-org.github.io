@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playground - Kilnx</title>
+  <meta name="description" content="Try Kilnx in your browser. Write declarative backend code with SQL, HTML, and htmx support.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .playground-wrapper {
+      padding-top: 5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .playground-header {
+      padding: 1.5rem;
+      max-width: 90rem;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .playground-header h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .playground-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .example-select {
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      cursor: pointer;
+      appearance: none;
+      padding-right: 2rem;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23a1a1aa' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.5rem center;
+      background-size: 1rem;
+    }
+
+    .example-select:hover {
+      border-color: var(--border-hover);
+    }
+
+    .example-select option {
+      background: var(--bg-elevated);
+      color: var(--text);
+    }
+
+    .btn-small {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .btn-small svg {
+      width: 0.875rem;
+      height: 0.875rem;
+    }
+
+    .btn-copy {
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
+    }
+
+    .btn-copy:hover {
+      color: var(--text);
+      border-color: var(--border-hover);
+    }
+
+    .btn-download {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-download:hover {
+      background: var(--accent-glow);
+    }
+
+    .playground-main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      max-width: 90rem;
+      margin: 0 auto;
+      width: 100%;
+      padding: 0 1.5rem 1.5rem;
+      min-height: calc(100vh - 12rem);
+    }
+
+    .editor-pane, .preview-pane {
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .editor-pane {
+      border-radius: 0.75rem 0 0 0.75rem;
+      border-right: none;
+    }
+
+    .preview-pane {
+      border-radius: 0 0.75rem 0.75rem 0;
+    }
+
+    .pane-header {
+      background: var(--bg-subtle);
+      border-bottom: 1px solid var(--border);
+      padding: 0.625rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .pane-header .file-name {
+      color: var(--text-secondary);
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .editor-area {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .line-numbers {
+      padding: 1rem 0;
+      padding-right: 0.75rem;
+      padding-left: 0.75rem;
+      text-align: right;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      line-height: 1.7;
+      user-select: none;
+      min-width: 3rem;
+      border-right: 1px solid var(--border);
+      overflow: hidden;
+      opacity: 0.5;
+      white-space: pre;
+    }
+
+    .editor-input {
+      flex: 1;
+      display: flex;
+      position: relative;
+    }
+
+    .editor-highlight {
+      position: absolute;
+      inset: 0;
+      padding: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      line-height: 1.7;
+      white-space: pre;
+      overflow: auto;
+      pointer-events: none;
+      color: var(--text);
+    }
+
+    .editor-textarea {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 1rem;
+      background: transparent;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      line-height: 1.7;
+      border: none;
+      outline: none;
+      resize: none;
+      white-space: pre;
+      overflow: auto;
+      tab-size: 2;
+      caret-color: var(--accent);
+      color: transparent;
+    }
+
+    .editor-textarea::selection {
+      background: rgba(230,74,25,0.25);
+      color: transparent;
+    }
+
+    .preview-content {
+      flex: 1;
+      padding: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      line-height: 1.7;
+      overflow: auto;
+      white-space: pre;
+    }
+
+    /* Syntax colors matching the main site */
+    .hl-kw { color: #ff6e40; }
+    .hl-str { color: #66bb6a; }
+    .hl-typ { color: #42a5f5; }
+    .hl-cmt { color: #546e7a; font-style: italic; }
+    .hl-prop { color: #ce93d8; }
+    .hl-attr { color: #ffb74d; }
+    .hl-num { color: #ffab40; }
+    .hl-fn { color: #80cbc4; }
+    .hl-sql { color: #ef5350; }
+    .hl-path { color: #4dd0e1; }
+    .hl-tag { color: #ef5350; }
+    .hl-tpl { color: #ffd54f; font-style: italic; }
+    .hl-param { color: #ba68c8; }
+
+    /* Preview structure highlighting */
+    .pv-section { color: var(--accent); font-weight: 600; }
+    .pv-model { color: #42a5f5; }
+    .pv-route { color: #4dd0e1; }
+    .pv-field { color: #ce93d8; }
+    .pv-type { color: #66bb6a; }
+    .pv-ok { color: #66bb6a; }
+    .pv-warn { color: #ffb74d; }
+    .pv-err { color: #ef5350; }
+    .pv-muted { color: var(--text-muted); }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(2rem);
+      padding: 0.625rem 1.25rem;
+      border-radius: 0.5rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 0.8125rem;
+      font-family: var(--font-sans);
+      opacity: 0;
+      transition: all 0.3s;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .status-bar {
+      padding: 0.375rem 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-subtle);
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-right: 0.375rem;
+    }
+
+    .status-dot.ok { background: #66bb6a; }
+    .status-dot.warn { background: #ffb74d; }
+    .status-dot.err { background: #ef5350; }
+
+    @media (max-width: 1024px) {
+      .playground-main {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .editor-pane {
+        border-radius: 0.75rem 0.75rem 0 0;
+        border-right: 1px solid var(--border);
+        border-bottom: none;
+        min-height: 50vh;
+      }
+      .preview-pane {
+        border-radius: 0 0 0.75rem 0.75rem;
+        min-height: 30vh;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .playground-header { padding: 1rem; }
+      .playground-main { padding: 0 1rem 1rem; }
+      .playground-controls { width: 100%; justify-content: stretch; }
+      .example-select { flex: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a href="/" class="nav-logo">
+        <img src="logos/kilnx-icon.svg" alt="" style="filter:invert(1)">
+        <img src="logos/kilnx-text.svg" alt="Kilnx" style="filter:invert(1)">
+      </a>
+      <div class="nav-links">
+        <a href="/#features">Features</a>
+        <a href="/#examples">Examples</a>
+        <a href="/playground.html" style="color:var(--accent)">Playground</a>
+        <a href="https://github.com/kilnx-org/kilnx/blob/main/GRAMMAR.md">Docs</a>
+        <a href="https://github.com/kilnx-org">GitHub</a>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="https://discord.gg/AJcw5eee54" class="nav-icon-link">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286z"/></svg>
+      </a>
+      <a href="https://github.com/kilnx-org/kilnx" class="nav-icon-link">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      </a>
+      <a href="/#get-started" class="btn-nav">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<div class="playground-wrapper">
+  <div class="playground-header">
+    <h1><span class="gradient-text">Playground</span></h1>
+    <div class="playground-controls">
+      <select class="example-select" id="example-select">
+        <option value="hello">Hello World</option>
+        <option value="blog" selected>Blog</option>
+        <option value="dashboard">Dashboard</option>
+        <option value="blank">Blank</option>
+      </select>
+      <button class="btn-small btn-copy" id="btn-copy" title="Copy to clipboard">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+        Copy
+      </button>
+      <button class="btn-small btn-download" id="btn-download" title="Download .kilnx file">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        Download
+      </button>
+    </div>
+  </div>
+
+  <div class="playground-main">
+    <div class="editor-pane">
+      <div class="pane-header">
+        <span>Editor</span>
+        <span class="file-name">app.kilnx</span>
+      </div>
+      <div class="editor-area">
+        <div class="line-numbers" id="line-numbers"></div>
+        <div class="editor-input">
+          <div class="editor-highlight" id="editor-highlight"></div>
+          <textarea class="editor-textarea" id="editor" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></textarea>
+        </div>
+      </div>
+      <div class="status-bar">
+        <span><span class="status-dot ok" id="status-dot"></span><span id="status-text">Ready</span></span>
+        <span id="cursor-pos">Ln 1, Col 1</span>
+      </div>
+    </div>
+
+    <div class="preview-pane">
+      <div class="pane-header">
+        <span>Analysis</span>
+        <span class="file-name" id="preview-stats"></span>
+      </div>
+      <div class="preview-content" id="preview"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// Playground logic - all content is from hardcoded examples, not user-generated HTML.
+// The innerHTML usage below only processes content from the controlled examples object
+// and the highlighter which escapes all HTML entities before applying span wrappers.
+(function() {
+  var examples = {
+    hello: 'page /\n  html\n    <h1>Hello, World!</h1>\n    <p>Welcome to Kilnx.</p>',
+
+    blog: 'config\n  database: env DATABASE_URL default "sqlite://blog.db"\n  port: env PORT default 8080\n  secret: env SECRET_KEY default "dev-secret"\n\nmodel user\n  name: text required min 2 max 100\n  email: email unique\n  password: password required\n  role: option [admin, author] default author\n  created: timestamp auto\n\nmodel post\n  title: text required min 5\n  body: richtext required\n  status: option [draft, published] default draft\n  author: user required\n  created: timestamp auto\n\nauth\n  table: user\n  identity: email\n  password: password\n  login: /login\n  after login: /posts\n\npage /\n  query posts: SELECT p.title, p.created, u.name as author\n               FROM post p\n               LEFT JOIN user u ON u.id = p.author_id\n               WHERE p.status = \'published\'\n               ORDER BY p.created DESC\n               paginate 10\n  html\n    <h1>Blog</h1>\n    {{each posts}}\n    <article>\n      <h2>{title}</h2>\n      <span>by {author} on {created}</span>\n    </article>\n    {{end}}\n\npage /posts requires auth\n  query posts: SELECT id, title, status, created FROM post\n               WHERE author_id = :current_user.id\n               ORDER BY created DESC\n  html\n    <h1>My Posts</h1>\n    <a href="/posts/new">New Post</a>\n    {{each posts}}\n    <div>\n      <a href="/posts/{id}">{title}</a>\n      <span>{status}</span>\n    </div>\n    {{end}}\n\naction /posts/create method POST requires auth\n  validate\n    title: required min 5\n    body: required\n  query: INSERT INTO post (title, body, author_id, status)\n         VALUES (:title, :body, :current_user.id, \'published\')\n  redirect /posts\n\nfragment /posts/:id/preview\n  query post: SELECT title, body, created FROM post WHERE id = :id\n  html\n    <article>\n      <h2>{post.title}</h2>\n      <p>{post.body}</p>\n      <time>{post.created}</time>\n    </article>\n\ntest "homepage loads"\n  visit /\n  expect page / contains "Blog"\n\ntest "create post requires auth"\n  visit /posts/new\n  expect page /login',
+
+    dashboard: 'config\n  database: env DATABASE_URL default "sqlite://dashboard.db"\n  port: env PORT default 8080\n  secret: env SECRET_KEY default "dev-secret"\n\nmodel event\n  type: text required\n  source: text\n  value: float default 0\n  created: timestamp auto\n\nmodel daily_summary\n  date: text required\n  total_events: text default "0"\n  total_value: text default "0"\n  created: timestamp auto\n\npage /\n  query totals: SELECT COUNT(*) as events, COALESCE(SUM(value), 0) as revenue\n                FROM event\n  query recent: SELECT type, source, value, created\n                FROM event\n                ORDER BY created DESC\n                paginate 20\n  html\n    <h1>Dashboard</h1>\n    <div class="metrics" hx-ext="sse" sse-connect="/stream/metrics">\n      <div class="card" sse-swap="update">\n        <h2>Events: {totals.events}</h2>\n        <p>Revenue: {totals.revenue|currency:"$"}</p>\n      </div>\n    </div>\n    <h2>Recent Events</h2>\n    <table>\n      {{each recent}}\n      <tr>\n        <td>{type}</td>\n        <td>{source}</td>\n        <td>{value|currency:"$"}</td>\n        <td>{created|timeago}</td>\n      </tr>\n      {{end}}\n    </table>\n\nstream /stream/metrics\n  every 5s\n  query: SELECT COUNT(*) as events, COALESCE(SUM(value), 0) as revenue FROM event\n  event: update\n\nwebhook /hooks/events secret env WEBHOOK_SECRET\n  on event *\n    query: INSERT INTO event (type, source, value)\n           VALUES (:event_type, :event_source, :event_value)\n\napi /api/stats\n  query stats: SELECT COUNT(*) as total_events,\n               COALESCE(SUM(value), 0) as total_revenue,\n               COUNT(DISTINCT type) as event_types\n               FROM event\n\napi /api/events\n  query events: SELECT type, source, value, created\n                FROM event\n                ORDER BY created DESC\n                paginate 50\n\nschedule daily-summary every 24h\n  query: DELETE FROM event WHERE created < datetime(\'now\', \'-30 days\')\n\ntest "dashboard loads"\n  visit /\n  expect page / contains "Dashboard"\n\ntest "api returns stats"\n  visit /api/stats\n  expect page /api/stats contains "total_events"',
+
+    blank: '# Your Kilnx app\n\nconfig\n  database: env DATABASE_URL default "sqlite://app.db"\n  port: env PORT default 8080\n  secret: env SECRET_KEY default "dev-secret"\n\npage /\n  html\n    <h1>Hello!</h1>'
+  };
+
+  var topKeywords = ['config','model','auth','permissions','layout','page','action','fragment','api','stream','socket','webhook','schedule','job'];
+  var bodyKeywords = ['query','queries','validate','redirect','html','send','enqueue','broadcast','on','requires','require','method','title','limit','log','test','translations','fetch','respond','every','event'];
+  var fieldTypes = ['text','email','bool','timestamp','richtext','option','int','float','password','image','phone'];
+  var constraints = ['required','unique','default','auto','min','max','optional','paginate'];
+  var sqlKeywords = ['SELECT','INSERT','UPDATE','DELETE','FROM','WHERE','INTO','VALUES','SET','JOIN','LEFT','RIGHT','INNER','ON','AND','OR','NOT','ORDER','BY','GROUP','HAVING','LIMIT','OFFSET','AS','IN','IS','NULL','LIKE','BETWEEN','EXISTS','UNION','ALL','DISTINCT','COUNT','SUM','AVG','MIN','MAX','DESC','ASC','COALESCE'];
+  var httpMethods = ['POST','GET','PUT','DELETE','PATCH'];
+
+  var editor = document.getElementById('editor');
+  var highlight = document.getElementById('editor-highlight');
+  var lineNumbers = document.getElementById('line-numbers');
+  var preview = document.getElementById('preview');
+  var previewStats = document.getElementById('preview-stats');
+  var statusDot = document.getElementById('status-dot');
+  var statusText = document.getElementById('status-text');
+  var cursorPos = document.getElementById('cursor-pos');
+  var exampleSelect = document.getElementById('example-select');
+  var toastEl = document.getElementById('toast');
+
+  function escapeHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function highlightLine(line) {
+    var escaped = escapeHtml(line);
+
+    if (/^\s*#/.test(line)) {
+      return '<span class="hl-cmt">' + escaped + '</span>';
+    }
+
+    escaped = escaped.replace(/(\{\{(?:each|end|if|else)\s*[^}]*\}\})/g, '<span class="hl-tpl">$1</span>');
+    escaped = escaped.replace(/(\{[a-zA-Z_][a-zA-Z0-9_.]*(?:\s*\|[^}]*)?\})/g, '<span class="hl-tpl">$1</span>');
+    escaped = escaped.replace(/(:[a-zA-Z_][a-zA-Z0-9_.]*)/g, '<span class="hl-param">$1</span>');
+
+    var sqlRe = new RegExp('\\b(' + sqlKeywords.join('|') + ')\\b', 'g');
+    escaped = escaped.replace(sqlRe, '<span class="hl-sql">$1</span>');
+
+    var topRe = new RegExp('^(' + topKeywords.join('|') + ')\\b');
+    escaped = escaped.replace(topRe, '<span class="hl-kw">$1</span>');
+
+    var bodyRe = new RegExp('^(\\s+)(' + bodyKeywords.join('|') + ')\\b');
+    escaped = escaped.replace(bodyRe, '$1<span class="hl-kw">$2</span>');
+
+    var typeRe = new RegExp(':\\s*(' + fieldTypes.join('|') + ')\\b', 'g');
+    escaped = escaped.replace(typeRe, ': <span class="hl-typ">$1</span>');
+
+    var conRe = new RegExp('\\b(' + constraints.join('|') + ')\\b', 'g');
+    escaped = escaped.replace(conRe, '<span class="hl-attr">$1</span>');
+
+    var httpRe = new RegExp('\\b(' + httpMethods.join('|') + ')\\b', 'g');
+    escaped = escaped.replace(httpRe, '<span class="hl-attr">$1</span>');
+
+    escaped = escaped.replace(/(&quot;[^&]*&quot;)/g, '<span class="hl-str">$1</span>');
+    escaped = escaped.replace(/(\s)(\/[a-zA-Z0-9\/:_-]+)/g, '$1<span class="hl-path">$2</span>');
+    escaped = escaped.replace(/\b(\d+(?:\.\d+)?)\b/g, '<span class="hl-num">$1</span>');
+    escaped = escaped.replace(/(&lt;\/?[a-zA-Z][a-zA-Z0-9-]*)/g, '<span class="hl-tag">$1</span>');
+    escaped = escaped.replace(/\b(hx-[a-z-]+|sse-[a-z-]+)/g, '<span class="hl-attr">$1</span>');
+    escaped = escaped.replace(/\b(env)\b/g, '<span class="hl-attr">$1</span>');
+
+    return escaped;
+  }
+
+  function updateHighlight() {
+    var code = editor.value;
+    var lines = code.split('\n');
+    var highlighted = lines.map(highlightLine).join('\n');
+    highlight.innerHTML = highlighted + '\n';
+  }
+
+  function updateLineNumbers() {
+    var lines = editor.value.split('\n').length;
+    var nums = [];
+    for (var i = 1; i <= lines; i++) nums.push(i);
+    lineNumbers.textContent = nums.join('\n');
+  }
+
+  function analyze(code) {
+    var lines = code.split('\n');
+    var models = [];
+    var routes = [];
+    var tests = [];
+    var issues = [];
+    var hasConfig = false;
+    var hasAuth = false;
+    var currentModel = null;
+
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i];
+      var trimmed = line.trim();
+      var ln = i + 1;
+
+      if (trimmed === '' || trimmed.startsWith('#')) continue;
+
+      if (/^config\b/.test(trimmed)) { hasConfig = true; currentModel = null; continue; }
+      if (/^auth\b/.test(trimmed)) { hasAuth = true; currentModel = null; continue; }
+
+      var modelMatch = trimmed.match(/^model\s+(\w+)/);
+      if (modelMatch) {
+        currentModel = { name: modelMatch[1], fields: [], line: ln };
+        models.push(currentModel);
+        continue;
+      }
+
+      if (currentModel && /^\s+\w+:\s*(text|email|bool|timestamp|richtext|option|int|float|password|image|phone)/.test(line)) {
+        var fieldMatch = line.match(/^\s+(\w+):\s*(\w+)(.*)/);
+        if (fieldMatch) {
+          currentModel.fields.push({ name: fieldMatch[1], type: fieldMatch[2], mods: fieldMatch[3].trim() });
+        }
+        continue;
+      }
+
+      var routeMatch = trimmed.match(/^(page|action|fragment|api|stream|socket|webhook|schedule)\s+(\/[^\s]*|[\w-]+)/);
+      if (routeMatch) {
+        currentModel = null;
+        routes.push({
+          kind: routeMatch[1],
+          path: routeMatch[2],
+          line: ln,
+          auth: /requires\s+auth/.test(trimmed),
+          method: (trimmed.match(/method\s+(POST|PUT|DELETE|PATCH)/) || [null, routeMatch[1] === 'action' ? 'POST' : 'GET'])[1]
+        });
+        continue;
+      }
+
+      var testMatch = trimmed.match(/^test\s+"([^"]+)"/);
+      if (testMatch) {
+        currentModel = null;
+        tests.push({ name: testMatch[1], line: ln });
+        continue;
+      }
+    }
+
+    if (!hasConfig && lines.length > 3) {
+      issues.push({ type: 'warn', msg: 'No config block found. Defaults will be used.' });
+    }
+
+    var hasPassword = false;
+    models.forEach(function(m) {
+      if (m.fields.length === 0) {
+        issues.push({ type: 'warn', msg: 'Model "' + m.name + '" has no fields (line ' + m.line + ')' });
+      }
+      m.fields.forEach(function(f) { if (f.type === 'password') hasPassword = true; });
+    });
+
+    if (hasPassword && !hasAuth) {
+      issues.push({ type: 'warn', msg: 'Model with password field found but no auth block defined.' });
+    }
+
+    routes.forEach(function(r) {
+      if (r.kind === 'action' && !r.auth) {
+        issues.push({ type: 'warn', msg: r.kind + ' ' + r.path + ' has no auth requirement (line ' + r.line + ')' });
+      }
+    });
+
+    return { models: models, routes: routes, tests: tests, issues: issues, hasConfig: hasConfig, hasAuth: hasAuth, lineCount: lines.length };
+  }
+
+  function renderPreview(a) {
+    var parts = [];
+
+    parts.push('<span class="pv-section">Structure</span>');
+    parts.push('<span class="pv-muted">  Config:  </span>' + (a.hasConfig ? '<span class="pv-ok">yes</span>' : '<span class="pv-muted">no (defaults)</span>'));
+    parts.push('<span class="pv-muted">  Auth:    </span>' + (a.hasAuth ? '<span class="pv-ok">yes</span>' : '<span class="pv-muted">no</span>'));
+    parts.push('');
+
+    if (a.models.length) {
+      parts.push('<span class="pv-section">Models (' + a.models.length + ')</span>');
+      a.models.forEach(function(m) {
+        parts.push('  <span class="pv-model">' + escapeHtml(m.name) + '</span> <span class="pv-muted">' + m.fields.length + ' fields</span>');
+        m.fields.forEach(function(f) {
+          parts.push('    <span class="pv-field">' + escapeHtml(f.name) + '</span>: <span class="pv-type">' + escapeHtml(f.type) + '</span>' + (f.mods ? ' <span class="pv-muted">' + escapeHtml(f.mods) + '</span>' : ''));
+        });
+      });
+      parts.push('');
+    }
+
+    if (a.routes.length) {
+      parts.push('<span class="pv-section">Routes (' + a.routes.length + ')</span>');
+      a.routes.forEach(function(r) {
+        var badge = r.auth ? ' <span class="pv-ok">[auth]</span>' : '';
+        parts.push('  <span class="pv-muted">' + escapeHtml(r.method) + '</span> <span class="pv-route">' + escapeHtml(r.path) + '</span> <span class="pv-muted">(' + escapeHtml(r.kind) + ')</span>' + badge);
+      });
+      parts.push('');
+    }
+
+    if (a.tests.length) {
+      parts.push('<span class="pv-section">Tests (' + a.tests.length + ')</span>');
+      a.tests.forEach(function(t) {
+        parts.push('  <span class="pv-ok">\u2713</span> ' + escapeHtml(t.name));
+      });
+      parts.push('');
+    }
+
+    if (a.issues.length) {
+      parts.push('<span class="pv-section">Warnings (' + a.issues.length + ')</span>');
+      a.issues.forEach(function(issue) {
+        var cls = issue.type === 'err' ? 'pv-err' : 'pv-warn';
+        var icon = issue.type === 'err' ? '\u2717' : '\u26A0';
+        parts.push('  <span class="' + cls + '">' + icon + '</span> ' + escapeHtml(issue.msg));
+      });
+      parts.push('');
+    }
+
+    if (a.models.length === 0 && a.routes.length === 0) {
+      parts.push('<span class="pv-muted">Start typing to see your app structure here.</span>');
+    }
+
+    parts.push('');
+    parts.push('<span class="pv-muted">' + a.lineCount + ' lines | ' + a.models.length + ' models | ' + a.routes.length + ' routes | ' + a.tests.length + ' tests</span>');
+
+    preview.innerHTML = parts.join('\n');
+    previewStats.textContent = a.models.length + ' models, ' + a.routes.length + ' routes';
+
+    if (a.issues.some(function(i) { return i.type === 'err'; })) {
+      statusDot.className = 'status-dot err';
+      statusText.textContent = a.issues.length + ' issue(s)';
+    } else if (a.issues.length) {
+      statusDot.className = 'status-dot warn';
+      statusText.textContent = a.issues.length + ' warning(s)';
+    } else {
+      statusDot.className = 'status-dot ok';
+      statusText.textContent = 'Ready';
+    }
+  }
+
+  function update() {
+    updateHighlight();
+    updateLineNumbers();
+    renderPreview(analyze(editor.value));
+  }
+
+  function loadExample(name) {
+    if (examples[name]) {
+      editor.value = examples[name];
+      update();
+    }
+  }
+
+  editor.addEventListener('scroll', function() {
+    highlight.scrollTop = editor.scrollTop;
+    highlight.scrollLeft = editor.scrollLeft;
+    lineNumbers.scrollTop = editor.scrollTop;
+  });
+
+  var debounceTimer;
+  editor.addEventListener('input', function() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(update, 100);
+    updateHighlight();
+    updateLineNumbers();
+  });
+
+  editor.addEventListener('keydown', function(e) {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      var start = editor.selectionStart;
+      var end = editor.selectionEnd;
+      editor.value = editor.value.substring(0, start) + '  ' + editor.value.substring(end);
+      editor.selectionStart = editor.selectionEnd = start + 2;
+      update();
+    }
+  });
+
+  function updateCursor() {
+    var val = editor.value.substring(0, editor.selectionStart);
+    var lines = val.split('\n');
+    cursorPos.textContent = 'Ln ' + lines.length + ', Col ' + (lines[lines.length - 1].length + 1);
+  }
+  editor.addEventListener('click', updateCursor);
+  editor.addEventListener('keyup', updateCursor);
+
+  exampleSelect.addEventListener('change', function() { loadExample(this.value); });
+
+  document.getElementById('btn-copy').addEventListener('click', function() {
+    navigator.clipboard.writeText(editor.value).then(function() { showToast('Copied to clipboard'); });
+  });
+
+  document.getElementById('btn-download').addEventListener('click', function() {
+    var blob = new Blob([editor.value], { type: 'text/plain' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'app.kilnx';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast('Downloaded app.kilnx');
+  });
+
+  function showToast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    setTimeout(function() { toastEl.classList.remove('show'); }, 2000);
+  }
+
+  loadExample('blog');
+})();
+</script>
+
+</body>
+</html>
