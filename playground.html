@@ -105,6 +105,75 @@
       background: var(--accent-glow);
     }
 
+    .btn-run {
+      background: #66bb6a;
+      color: white;
+    }
+
+    .btn-run:hover {
+      background: #81c784;
+    }
+
+    .btn-run.running {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .preview-tabs {
+      display: flex;
+      gap: 0;
+    }
+
+    .preview-tab {
+      padding: 0.625rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .preview-tab:hover {
+      color: var(--text-secondary);
+    }
+
+    .preview-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .output-frame {
+      flex: 1;
+      border: none;
+      background: white;
+      border-radius: 0 0 0.75rem 0;
+    }
+
+    .output-error {
+      flex: 1;
+      padding: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      line-height: 1.7;
+      color: #ef5350;
+      white-space: pre-wrap;
+    }
+
+    .output-placeholder {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
     .playground-main {
       flex: 1;
       display: grid;
@@ -377,6 +446,10 @@
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
         Download
       </button>
+      <button class="btn-small btn-run" id="btn-run" title="Run this code">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/></svg>
+        Run
+      </button>
     </div>
   </div>
 
@@ -401,10 +474,18 @@
 
     <div class="preview-pane">
       <div class="pane-header">
-        <span>Analysis</span>
+        <div class="preview-tabs">
+          <button class="preview-tab active" id="tab-analysis" data-tab="analysis">Analysis</button>
+          <button class="preview-tab" id="tab-output" data-tab="output">Output</button>
+        </div>
         <span class="file-name" id="preview-stats"></span>
       </div>
-      <div class="preview-content" id="preview"></div>
+      <div class="preview-content" id="preview" style="display:block"></div>
+      <div id="output-panel" style="display:none;flex:1;flex-direction:column">
+        <div class="output-placeholder" id="output-placeholder">Click <strong style="color:var(--accent);margin:0 0.25rem">Run</strong> to execute your code</div>
+        <iframe class="output-frame" id="output-frame" style="display:none" sandbox="allow-scripts allow-same-origin"></iframe>
+        <div class="output-error" id="output-error" style="display:none"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -717,6 +798,76 @@
     toastEl.classList.add('show');
     setTimeout(function() { toastEl.classList.remove('show'); }, 2000);
   }
+
+  // Tabs
+  var tabAnalysis = document.getElementById('tab-analysis');
+  var tabOutput = document.getElementById('tab-output');
+  var previewPanel = document.getElementById('preview');
+  var outputPanel = document.getElementById('output-panel');
+
+  function switchTab(tab) {
+    tabAnalysis.classList.toggle('active', tab === 'analysis');
+    tabOutput.classList.toggle('active', tab === 'output');
+    previewPanel.style.display = tab === 'analysis' ? 'block' : 'none';
+    outputPanel.style.display = tab === 'output' ? 'flex' : 'none';
+  }
+
+  tabAnalysis.addEventListener('click', function() { switchTab('analysis'); });
+  tabOutput.addEventListener('click', function() { switchTab('output'); });
+
+  // Run
+  var PLAYGROUND_API = 'https://docs.kilnx.dev/api/playground';
+  var btnRun = document.getElementById('btn-run');
+  var outputFrame = document.getElementById('output-frame');
+  var outputError = document.getElementById('output-error');
+  var outputPlaceholder = document.getElementById('output-placeholder');
+
+  btnRun.addEventListener('click', function() {
+    var code = editor.value;
+    if (!code.trim()) return;
+
+    btnRun.classList.add('running');
+    btnRun.textContent = 'Running...';
+    switchTab('output');
+    outputFrame.style.display = 'none';
+    outputError.style.display = 'none';
+    outputPlaceholder.style.display = 'flex';
+    outputPlaceholder.innerHTML = '<span style="color:var(--text-muted)">Compiling and running...</span>';
+
+    fetch(PLAYGROUND_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: code })
+    })
+    .then(function(resp) { return resp.json(); })
+    .then(function(data) {
+      btnRun.classList.remove('running');
+      btnRun.innerHTML = '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/></svg> Run';
+
+      if (data.error) {
+        outputPlaceholder.style.display = 'none';
+        outputFrame.style.display = 'none';
+        outputError.style.display = 'block';
+        outputError.textContent = data.error + (data.diagnostics ? '\n\n' + data.diagnostics : '');
+        return;
+      }
+
+      if (data.html) {
+        outputPlaceholder.style.display = 'none';
+        outputError.style.display = 'none';
+        outputFrame.style.display = 'block';
+        outputFrame.srcdoc = data.html;
+      }
+    })
+    .catch(function(err) {
+      btnRun.classList.remove('running');
+      btnRun.innerHTML = '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/></svg> Run';
+      outputPlaceholder.style.display = 'none';
+      outputFrame.style.display = 'none';
+      outputError.style.display = 'block';
+      outputError.textContent = 'Failed to connect to playground API. It may not be deployed yet.';
+    });
+  });
 
   loadExample('blog');
 })();
