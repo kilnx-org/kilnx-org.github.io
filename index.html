@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kilnx - The Backend Language for the htmx Era</title>
-  <meta name="description" content="Declarative backend language. SQL as first-class citizen, HTML as native output, htmx-aware. 27 keywords. Single binary. Zero config.">
-  <meta property="og:title" content="Kilnx - The Backend Language for the htmx Era">
-  <meta property="og:description" content="Declarative backend language. SQL as first-class citizen, HTML as native output, htmx-aware. 27 keywords. Single binary.">
+  <title>Kilnx - The Declarative Fullstack Language for the AI Era</title>
+  <meta name="description" content="Declarative fullstack language built to be written by humans and by AI. Models, routes, SQL, auth, UI in one file. 29 keywords. Built-in MCP server. Single binary. Zero config.">
+  <meta property="og:title" content="Kilnx - The Declarative Fullstack Language for the AI Era">
+  <meta property="og:description" content="Declarative fullstack language. Small enough for LLMs to author, strict enough to compile to a single binary. 29 keywords. MCP server built-in.">
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,16 +23,16 @@
         <img src="logos/kilnx-icon.svg" alt="" style="filter:invert(1)">
         <img src="logos/kilnx-text.svg" alt="Kilnx" style="filter:invert(1)">
       </a>
-      <div class="nav-links">
-        <a href="#features">Features</a>
-        <a href="#examples">Examples</a>
-        <a href="#keywords">Language</a>
-        <a href="#philosophy">Philosophy</a>
-        <a href="#deploy">Deploy</a>
-        <a href="/playground.html">Playground</a>
-        <a href="/kilnx/">Docs</a>
-        <a href="https://github.com/kilnx-org">GitHub</a>
-      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#examples">Examples</a>
+      <a href="#keywords">Language</a>
+      <a href="#philosophy">Philosophy</a>
+      <a href="#deploy">Deploy</a>
+      <a href="/playground.html">Playground</a>
+      <a href="/kilnx/">Docs</a>
+      <a href="https://github.com/kilnx-org">GitHub</a>
     </div>
     <div class="nav-right">
       <a href="https://discord.gg/AJcw5eee54" class="nav-icon-link">
@@ -59,13 +59,14 @@
     </div>
 
     <h1 class="anim anim-d1">
-      <span class="gradient-text">The backend language</span><br>
-      <span class="gradient-text">for the </span><span class="gradient-text-accent">htmx era</span>
+      <span class="gradient-text">The declarative fullstack language</span><br>
+      <span class="gradient-text">for the </span><span class="gradient-text-accent">AI era</span>
     </h1>
 
     <p class="hero-desc anim anim-d2">
-      Declarative backend programming. SQL as first-class citizen, HTML as
-      native output, htmx-aware. 27 keywords. Single binary. Zero config.
+      Models, routes, SQL, auth, UI in one file. A grammar of 29 keywords
+      small enough for LLMs to author, strict enough to compile to a single
+      binary. Built-in MCP server so AI tools read the spec directly.
     </p>
 
     <div class="hero-buttons anim anim-d3">
@@ -306,8 +307,9 @@ router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="fn
       <p class="section-label">Features</p>
       <h2 class="section-title gradient-text">Everything you need,<br>nothing you don't</h2>
       <p class="section-desc centered">
-        27 keywords replace an entire stack. Models, pages, actions,
-        auth, jobs, emails, websockets, API endpoints.
+        29 keywords replace an entire stack, and the grammar fits in an
+        LLM context window. Models, pages, actions, auth, jobs, emails,
+        websockets, API endpoints.
       </p>
     </div>
 
@@ -338,9 +340,9 @@ router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="fn
         <p>CSRF tokens auto-injected in forms. SQL injection prevented by parameterized queries. XSS blocked by auto-escaping. Bcrypt password hashing built-in.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/></svg></div>
-        <h3>Zero Config</h3>
-        <p>No framework to choose, no ORM to configure, no template engine to wire up. Create a .kilnx file, run it. One file can be a complete app.</p>
+        <div class="feature-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/></svg></div>
+        <h3>AI-Native</h3>
+        <p>A grammar that fits in any context window. Built-in MCP server exposes the spec, keywords, and examples to AI tools. LLMs write valid Kilnx on the first try because there are no surprises to guess at.</p>
       </div>
     </div>
   </div>
@@ -579,7 +581,7 @@ router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="fn
     <div class="keywords-layout">
       <div class="keywords-left">
         <p class="section-label">The entire language</p>
-        <h2 class="section-title gradient-text">27 keywords</h2>
+        <h2 class="section-title gradient-text">29 keywords</h2>
         <p class="section-desc">
           Python has 35 keywords and does none of this without importing libraries.
           JavaScript has 64. Java has 67. Kilnx has 27 and delivers a complete web
