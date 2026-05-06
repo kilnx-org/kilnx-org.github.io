@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kilnx - The Declarative Fullstack Language for the AI Era</title>
-  <meta name="description" content="Declarative fullstack language built to be written by humans and by AI. Models, routes, SQL, auth, UI in one file. 29 keywords. Built-in MCP server. Single binary. Zero config.">
+  <meta name="description" content="Declarative fullstack language built to be written by humans and by AI. Models, routes, SQL, auth, UI in one file. 30 keywords. Built-in MCP server. Single binary. Zero config.">
   <meta property="og:title" content="Kilnx - The Declarative Fullstack Language for the AI Era">
-  <meta property="og:description" content="Declarative fullstack language. Small enough for LLMs to author, strict enough to compile to a single binary. 29 keywords. MCP server built-in.">
+  <meta property="og:description" content="Declarative fullstack language. Small enough for LLMs to author, strict enough to compile to a single binary. 30 keywords. MCP server built-in.">
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,7 +66,7 @@
       </h1>
 
       <p class="hero-desc anim anim-d2">
-        Models, routes, SQL, auth, UI in one file. A grammar of 29 keywords
+        Models, routes, SQL, auth, UI in one file. A grammar of 30 keywords
         small enough for LLMs to author, strict enough to compile to a single
         binary. Built-in MCP server so AI tools read the spec directly.
       </p>
@@ -291,7 +291,7 @@ router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="fn
       <p class="section-label">Features</p>
       <h2 class="section-title gradient-text">Everything you need,<br>nothing you don't</h2>
       <p class="section-desc centered">
-        29 keywords replace an entire stack, and the grammar fits in an
+        30 keywords replace an entire stack, and the grammar fits in an
         LLM context window. Models, pages, actions, auth, jobs, emails,
         websockets, API endpoints.
       </p>
@@ -565,10 +565,10 @@ router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="fn
     <div class="keywords-layout">
       <div class="keywords-left">
         <p class="section-label">The entire language</p>
-        <h2 class="section-title gradient-text">29 keywords</h2>
+        <h2 class="section-title gradient-text">30 keywords</h2>
         <p class="section-desc">
           Python has 35 keywords and does none of this without importing libraries.
-          JavaScript has 64. Java has 67. Kilnx has 27 and delivers a complete web
+          JavaScript has 64. Java has 67. Kilnx has 30 and delivers a complete web
           app from database to browser.
         </p>
         <div class="keywords-cloud" id="keywords-cloud"></div>
@@ -706,16 +706,6 @@ router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="fn
   <span class="kw">query</span> <span class="fn">stats</span>: SELECT count(*) as total FROM orders
   <span class="str">"Welcome back. You have {stats.total} orders."</span></pre></div></template>
 
-  <template id="tpl-queries"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">queries</span></div><div class="terminal-keyword" style="margin-top:1.25rem">queries</div><p class="terminal-desc">Named query definitions. Define once, reference by name across pages and actions.</p><div class="terminal-example"><pre><span class="kw">queries</span>
-  <span class="fn">active-users</span>: SELECT u.name, u.email, COUNT(o.id) as orders
-                FROM users u
-                LEFT JOIN orders o ON o.user_id = u.id
-                WHERE u.active = true
-                GROUP BY u.id
-
-<span class="kw">page</span> /users
-  <span class="kw">query</span> <span class="fn">users</span>: active-users</pre></div></template>
-
   <template id="tpl-validate"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">validate</span></div><div class="terminal-keyword" style="margin-top:1.25rem">validate</div><p class="terminal-desc">Declarative server-side validation. By model name or inline rules.</p><div class="terminal-example"><pre><span class="kw">action</span> /users/new <span class="attr">method</span> POST
   <span class="kw">validate</span>
     <span class="prop">name</span>: required
@@ -725,20 +715,17 @@ router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="fn
          VALUES (:name, :email, :age)
   <span class="kw">redirect</span> /users</pre></div></template>
 
-  <template id="tpl-paginate"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">paginate</span></div><div class="terminal-keyword" style="margin-top:1.25rem">paginate</div><p class="terminal-desc">Automatic pagination. Generates controls with htmx. Add "paginate N" to any query.</p><div class="terminal-example"><pre><span class="kw">page</span> /posts
-  <span class="kw">query</span> <span class="fn">posts</span>: SELECT title, author FROM post
-               WHERE status = <span class="str">'published'</span>
-               ORDER BY published_at DESC
-               <span class="attr">paginate</span> <span class="num">20</span></pre></div></template>
-
-  <template id="tpl-send_email"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">send email</span></div><div class="terminal-keyword" style="margin-top:1.25rem">send email</div><p class="terminal-desc">Declarative SMTP email with templates, variables, and attachments.</p><div class="terminal-example"><pre><span class="kw">action</span> /users/invite <span class="attr">method</span> POST <span class="attr">requires</span> admin
-  <span class="kw">validate</span>
-    <span class="prop">email</span>: required, is email
-  <span class="kw">query</span>: INSERT INTO user (email, role, active)
-         VALUES (:email, <span class="str">'viewer'</span>, false)
-  <span class="kw">send email</span> to :email
+  <template id="tpl-send"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">send</span></div><div class="terminal-keyword" style="margin-top:1.25rem">send</div><p class="terminal-desc">Outbound side-effect verb. Sends email via SMTP with templates and attachments, or pushes a fragment over an open socket.</p><div class="terminal-example"><pre><span class="kw">action</span> /users/invite <span class="attr">method</span> POST <span class="attr">requires</span> admin
+  <span class="kw">query</span>: INSERT INTO user (email, role) VALUES (:email, <span class="str">'viewer'</span>)
+  <span class="kw">send</span> email to :email
     <span class="prop">template</span>: invite
-    <span class="prop">subject</span>: <span class="str">"You've been invited"</span></pre></div></template>
+    <span class="prop">subject</span>: <span class="str">"You've been invited"</span>
+
+<span class="kw">socket</span> /chat/:room <span class="attr">requires auth</span>
+  <span class="kw">on</span> connect
+    <span class="kw">query</span> <span class="fn">history</span>: SELECT body, author FROM chat_message
+                  WHERE room = :room ORDER BY created LIMIT 50
+    <span class="kw">send</span> history</pre></div></template>
 
   <template id="tpl-redirect"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">redirect</span></div><div class="terminal-keyword" style="margin-top:1.25rem">redirect</div><p class="terminal-desc">HTTP redirect after an action. Detects htmx requests and sends HX-Redirect header.</p><div class="terminal-example"><pre><span class="kw">action</span> /posts/create <span class="attr">method</span> POST <span class="attr">requires auth</span>
   <span class="kw">validate</span> post
@@ -805,6 +792,48 @@ router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="fn
     <span class="kw">query</span>: INSERT INTO chat_message (body, author, room)
            VALUES (:body, :current_user.id, :room)
     <span class="kw">broadcast</span> to :room fragment chat-bubble</pre></div></template>
+
+  <template id="tpl-requires"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">requires</span></div><div class="terminal-keyword" style="margin-top:1.25rem">requires</div><p class="terminal-desc">Access gate on routes. Composes role checks and expression predicates against the current user. Fails closed.</p><div class="terminal-example"><pre><span class="cmt">// any logged-in user</span>
+<span class="kw">page</span> /dashboard <span class="attr">requires auth</span>
+
+<span class="cmt">// named role</span>
+<span class="kw">page</span> /admin <span class="attr">requires</span> admin
+
+<span class="cmt">// platform operator (bypasses role checks)</span>
+<span class="kw">page</span> /ops <span class="attr">requires</span> superuser
+
+<span class="cmt">// expression predicate combined with role</span>
+<span class="kw">page</span> /billing <span class="attr">requires</span> admin, :current_user.plan in [<span class="str">'cad'</span>, <span class="str">'full'</span>]</pre></div></template>
+
+  <template id="tpl-method"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">method</span></div><div class="terminal-keyword" style="margin-top:1.25rem">method</div><p class="terminal-desc">HTTP verb modifier on actions. POST, PUT, PATCH, DELETE. Defaults to POST when omitted.</p><div class="terminal-example"><pre><span class="kw">action</span> /posts/:id/archive <span class="attr">method</span> POST <span class="attr">requires auth</span>
+  <span class="kw">query</span>: UPDATE post SET archived = true WHERE id = :id
+  <span class="kw">redirect</span> /posts
+
+<span class="kw">action</span> /posts/:id <span class="attr">method</span> DELETE <span class="attr">requires</span> admin
+  <span class="kw">query</span>: DELETE FROM post WHERE id = :id
+  <span class="kw">redirect</span> /posts</pre></div></template>
+
+  <template id="tpl-fetch"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">fetch</span></div><div class="terminal-keyword" style="margin-top:1.25rem">fetch</div><p class="terminal-desc">Outbound HTTP from actions, jobs, and webhooks. Result available as <code>{name.field}</code> in templates.</p><div class="terminal-example"><pre><span class="kw">action</span> /weather <span class="attr">method</span> POST
+  <span class="kw">fetch</span> <span class="fn">weather</span>: GET https://api.weather.com/v1/current?city=:city
+    <span class="prop">header</span> Authorization: <span class="str">"Bearer {env.WEATHER_KEY}"</span>
+  <span class="str">"It is {weather.temp_c}&deg;C in {city}."</span></pre></div></template>
+
+  <template id="tpl-llm"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">llm</span></div><div class="terminal-keyword" style="margin-top:1.25rem">llm</div><p class="terminal-desc">First-class LLM call. Pass a model name, optional <code>history</code> from SQL, and a <code>system</code> prompt. Result available as <code>{name.text}</code>.</p><div class="terminal-example"><pre><span class="kw">action</span> /chat/:id/reply <span class="attr">method</span> POST <span class="attr">requires auth</span>
+  <span class="kw">llm</span> <span class="fn">reply</span>: claude-sonnet-4-6
+    <span class="prop">history</span>: SELECT role, content FROM message
+              WHERE conversation_id = :id ORDER BY created
+    <span class="prop">system</span>: <span class="str">"You are a helpful assistant."</span>
+  <span class="kw">query</span>: INSERT INTO message (conversation_id, role, content)
+         VALUES (:id, <span class="str">'assistant'</span>, :reply.text)
+  <span class="kw">redirect</span> /chat/:id</pre></div></template>
+
+  <template id="tpl-title"><div><span class="terminal-prompt">$</span> kilnx explain <span class="kw">title</span></div><div class="terminal-keyword" style="margin-top:1.25rem">title</div><p class="terminal-desc">Page title attribute. Static string or dynamic from query data via interpolation.</p><div class="terminal-example"><pre><span class="kw">page</span> / <span class="attr">layout</span> main <span class="attr">title</span> <span class="str">"Home"</span>
+  <span class="str">"Welcome"</span>
+
+<span class="kw">page</span> /posts/:slug <span class="attr">layout</span> main <span class="attr">title</span> <span class="str">"{post.title}"</span>
+  <span class="kw">query</span> <span class="fn">post</span>: SELECT title, body FROM post WHERE slug = :slug
+  <span class="kw">html</span>
+    &lt;article&gt;&lt;h1&gt;{post.title}&lt;/h1&gt;{post.body|raw}&lt;/article&gt;</pre></div></template>
 </div>
 
 <!-- Comparison Table -->
@@ -1105,9 +1134,10 @@ router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="fn
 (function() {
   var kwList = [
     "config","model","permissions","auth","layout","page","action",
-    "fragment","api","stream","socket","webhook","schedule",
-    "job","query","queries","validate","paginate","send email",
-    "redirect","on","limit","log","test","translations","enqueue","broadcast"
+    "fragment","api","stream","socket","webhook","schedule","job",
+    "query","validate","redirect","on","limit","log","test",
+    "translations","enqueue","broadcast","send","requires","method",
+    "fetch","llm","title"
   ];
 
   var cloud = document.getElementById("keywords-cloud");
