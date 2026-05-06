@@ -26,10 +26,8 @@
     </div>
     <div class="nav-links">
       <a href="#features">Features</a>
-      <a href="#examples">Examples</a>
       <a href="#keywords">Language</a>
       <a href="#philosophy">Philosophy</a>
-      <a href="#deploy">Deploy</a>
       <a href="/playground.html">Playground</a>
       <a href="/kilnx/">Docs</a>
       <a href="https://github.com/kilnx-org">GitHub</a>
@@ -41,7 +39,7 @@
       <a href="https://github.com/kilnx-org/kilnx" class="nav-icon-link">
         <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
       </a>
-      <a href="#get-started" class="btn-nav">Get Started</a>
+      <a href="https://github.com/kilnx-org/kilnx#installation" class="btn-nav">Get Started</a>
     </div>
   </div>
 </nav>
@@ -72,7 +70,7 @@
       </p>
 
       <div class="hero-buttons anim anim-d3">
-        <a href="#get-started" class="btn-primary">
+        <a href="https://github.com/kilnx-org/kilnx#installation" class="btn-primary">
           Get Started
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
         </a>
@@ -332,232 +330,6 @@ router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="fn
   </div>
 </section>
 
-<!-- Real Examples -->
-<section id="examples">
-  <div class="container">
-    <div class="text-center" style="margin-bottom:4rem">
-      <p class="section-label">Real Examples</p>
-      <h2 class="section-title gradient-text">From Hello World to production CRM</h2>
-      <p class="section-desc centered">
-        These are real, runnable examples. Not pseudocode.
-        Copy, paste, <code style="color:var(--accent)">kilnx run app.kilnx</code>, done.
-      </p>
-    </div>
-
-    <!-- Example Tabs -->
-    <div class="example-tabs" id="example-tabs">
-      <button class="example-tab active" data-example="hello">Hello World</button>
-      <button class="example-tab" data-example="blog">Blog with Auth</button>
-      <button class="example-tab" data-example="crm">CRM Dashboard</button>
-    </div>
-
-    <!-- Hello World -->
-    <div class="example-panel active" id="example-hello">
-      <div class="example-grid">
-        <div class="example-code">
-          <div class="code-block glow">
-            <div class="code-header">
-              <div style="display:flex;align-items:center;gap:0.5rem">
-                <div class="code-dots"><div class="code-dot code-dot-r"></div><div class="code-dot code-dot-y"></div><div class="code-dot code-dot-g"></div></div>
-                <span style="margin-left:0.5rem">hello.kilnx</span>
-              </div>
-              <span>2 lines</span>
-            </div>
-            <pre class="code-body"><span class="kw">page</span> /
-  <span class="str">"Hello World"</span></pre>
-          </div>
-        </div>
-        <div class="example-info">
-          <h3>One useful line</h3>
-          <p>No imports, no boilerplate, no configuration. A running HTTP server with htmx auto-linked.</p>
-          <div class="example-run">
-            <div class="code-block">
-              <pre class="code-body" style="padding:1rem"><span class="cmt">$</span> kilnx run hello.kilnx
-<span class="str">Server running on http://localhost:8080</span></pre>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Blog -->
-    <div class="example-panel" id="example-blog">
-      <div class="example-code" style="max-width:100%">
-        <div class="code-block glow">
-          <div class="code-header">
-            <div style="display:flex;align-items:center;gap:0.5rem">
-              <div class="code-dots"><div class="code-dot code-dot-r"></div><div class="code-dot code-dot-y"></div><div class="code-dot code-dot-g"></div></div>
-              <span style="margin-left:0.5rem">blog.kilnx</span>
-            </div>
-            <span style="color:var(--accent)">94 lines. Auth, CRUD, pagination, tests. Everything.</span>
-          </div>
-          <pre class="code-body"><span class="kw">config</span>
-  <span class="prop">database</span>: <span class="attr">env</span> DATABASE_URL <span class="attr">default</span> <span class="str">"sqlite://blog.db"</span>
-  <span class="prop">port</span>: <span class="attr">env</span> PORT <span class="attr">default</span> <span class="num">8080</span>
-  <span class="prop">secret</span>: <span class="attr">env</span> SECRET_KEY <span class="attr">default</span> <span class="str">"dev-secret"</span>
-
-<span class="kw">model</span> <span class="typ">user</span>
-  <span class="prop">name</span>: <span class="typ">text</span> <span class="attr">required</span> <span class="attr">min</span> 2 <span class="attr">max</span> 100
-  <span class="prop">email</span>: <span class="typ">email</span> <span class="attr">unique</span>
-  <span class="prop">password</span>: <span class="typ">password</span> <span class="attr">required</span>
-  <span class="prop">role</span>: <span class="typ">option</span> [<span class="str">admin</span>, <span class="str">author</span>] <span class="attr">default</span> author
-  <span class="prop">created</span>: <span class="typ">timestamp</span> <span class="attr">auto</span>
-
-<span class="kw">model</span> <span class="typ">post</span>
-  <span class="prop">title</span>: <span class="typ">text</span> <span class="attr">required</span> <span class="attr">min</span> 5
-  <span class="prop">body</span>: <span class="typ">richtext</span> <span class="attr">required</span>
-  <span class="prop">status</span>: <span class="typ">option</span> [<span class="str">draft</span>, <span class="str">published</span>] <span class="attr">default</span> draft
-  <span class="prop">author</span>: <span class="typ">user</span> <span class="attr">required</span>
-  <span class="prop">created</span>: <span class="typ">timestamp</span> <span class="attr">auto</span>
-
-<span class="kw">auth</span>
-  <span class="prop">table</span>: user
-  <span class="prop">identity</span>: email
-  <span class="prop">password</span>: password
-  <span class="prop">login</span>: /login
-  <span class="prop">after login</span>: /posts
-
-<span class="kw">page</span> /
-  <span class="kw">query</span> <span class="fn">posts</span>: SELECT p.title, p.created, u.name as author
-               FROM post p
-               LEFT JOIN user u ON u.id = p.author
-               WHERE p.status = <span class="str">'published'</span>
-               ORDER BY p.created DESC
-               <span class="attr">paginate</span> <span class="num">10</span>
-  <span class="kw">html</span>
-    &lt;h1&gt;Blog&lt;/h1&gt;
-    <span class="cmt">{{each posts}}</span>
-    &lt;article&gt;
-      &lt;h2&gt;{title}&lt;/h2&gt;
-      &lt;span&gt;by {author} on {created}&lt;/span&gt;
-    &lt;/article&gt;
-    <span class="cmt">{{end}}</span>
-
-<span class="kw">page</span> /posts <span class="attr">requires auth</span>
-  <span class="kw">query</span> <span class="fn">posts</span>: SELECT id, title, status, created FROM post
-               WHERE author = :current_user.id ORDER BY created DESC
-  <span class="kw">html</span>
-    &lt;h1&gt;My Posts&lt;/h1&gt;
-    &lt;a href=<span class="str">"/posts/new"</span>&gt;New Post&lt;/a&gt;
-    <span class="cmt">{{each posts}}</span>
-    &lt;div&gt;
-      &lt;a href=<span class="str">"/posts/{id}"</span>&gt;{title}&lt;/a&gt;
-      &lt;span&gt;{status}&lt;/span&gt;
-    &lt;/div&gt;
-    <span class="cmt">{{end}}</span>
-
-<span class="kw">action</span> /posts/create <span class="attr">method</span> POST <span class="attr">requires auth</span>
-  <span class="kw">validate</span>
-    <span class="prop">title</span>: required min 5
-    <span class="prop">body</span>: required
-  <span class="kw">query</span>: INSERT INTO post (title, body, author, status)
-         VALUES (:title, :body, :current_user.id, <span class="str">'published'</span>)
-  <span class="kw">redirect</span> /posts
-
-<span class="kw">action</span> /posts/:id/delete <span class="attr">method</span> POST <span class="attr">requires auth</span>
-  <span class="kw">query</span>: DELETE FROM post WHERE id = :id AND author = :current_user.id
-  <span class="kw">redirect</span> /posts
-
-<span class="kw">fragment</span> /posts/:id/preview
-  <span class="kw">query</span> <span class="fn">post</span>: SELECT title, body, created FROM post WHERE id = :id
-  <span class="kw">html</span>
-    &lt;article&gt;
-      &lt;h2&gt;{post.title}&lt;/h2&gt;
-      &lt;p&gt;{post.body}&lt;/p&gt;
-      &lt;time&gt;{post.created}&lt;/time&gt;
-    &lt;/article&gt;
-
-<span class="kw">test</span> <span class="str">"homepage loads"</span>
-  visit /
-  expect page / contains <span class="str">"Blog"</span>
-
-<span class="kw">test</span> <span class="str">"create post requires auth"</span>
-  visit /posts/new
-  expect page /login</pre>
-        </div>
-      </div>
-    </div>
-
-    <!-- CRM -->
-    <div class="example-panel" id="example-crm">
-      <div class="example-code" style="max-width:100%">
-        <div class="code-block glow">
-          <div class="code-header">
-            <div style="display:flex;align-items:center;gap:0.5rem">
-              <div class="code-dots"><div class="code-dot code-dot-r"></div><div class="code-dot code-dot-y"></div><div class="code-dot code-dot-g"></div></div>
-              <span style="margin-left:0.5rem">crm/app.kilnx</span>
-            </div>
-            <span style="color:var(--accent)">~800 lines. Contacts, companies, deals, dashboards.</span>
-          </div>
-          <pre class="code-body"><span class="cmt"># Models with relationships</span>
-<span class="kw">model</span> <span class="typ">company</span>
-  <span class="prop">name</span>: <span class="typ">text</span> <span class="attr">required</span> <span class="attr">min</span> 2 <span class="attr">max</span> 100
-  <span class="prop">industry</span>: <span class="typ">text</span>
-  <span class="prop">website</span>: <span class="typ">text</span>
-  <span class="prop">created_at</span>: <span class="typ">timestamp</span> <span class="attr">auto</span>
-
-<span class="kw">model</span> <span class="typ">contact</span>
-  <span class="prop">name</span>: <span class="typ">text</span> <span class="attr">required</span> <span class="attr">min</span> 2 <span class="attr">max</span> 100
-  <span class="prop">email</span>: <span class="typ">email</span> <span class="attr">unique</span>
-  <span class="prop">phone</span>: <span class="typ">phone</span>
-  <span class="prop">role</span>: <span class="typ">text</span>
-  <span class="prop">company</span>: <span class="typ">company</span> <span class="attr">required</span>
-  <span class="prop">created_at</span>: <span class="typ">timestamp</span> <span class="attr">auto</span>
-
-<span class="kw">model</span> <span class="typ">deal</span>
-  <span class="prop">title</span>: <span class="typ">text</span> <span class="attr">required</span>
-  <span class="prop">value</span>: <span class="typ">float</span> <span class="attr">required</span>
-  <span class="prop">stage</span>: <span class="typ">option</span> [<span class="str">lead</span>, <span class="str">proposal</span>, <span class="str">negotiation</span>, <span class="str">closed_won</span>, <span class="str">closed_lost</span>] <span class="attr">default</span> lead
-  <span class="prop">contact</span>: <span class="typ">contact</span> <span class="attr">required</span>
-  <span class="prop">notes</span>: <span class="typ">richtext</span>
-  <span class="prop">created_at</span>: <span class="typ">timestamp</span> <span class="attr">auto</span>
-
-<span class="cmt"># Dashboard with aggregate queries</span>
-<span class="kw">page</span> / <span class="attr">layout</span> main <span class="attr">title</span> <span class="str">"Dashboard"</span>
-  <span class="kw">query</span> <span class="fn">stats</span>: SELECT
-    (SELECT COUNT(*) FROM contact) as contacts,
-    (SELECT COUNT(*) FROM company) as companies,
-    (SELECT COUNT(*) FROM deal WHERE stage NOT IN (<span class="str">'closed_won'</span>,<span class="str">'closed_lost'</span>)) as active_deals,
-    (SELECT COALESCE(SUM(value),0) FROM deal WHERE stage = <span class="str">'closed_won'</span>) as revenue
-  <span class="kw">query</span> <span class="fn">recent_deals</span>: SELECT d.title, d.value, d.stage, c.name as contact
-    FROM deal d LEFT JOIN contact c ON c.id = d.contact
-    ORDER BY d.created_at DESC LIMIT 5
-  <span class="kw">html</span>
-    &lt;div class=<span class="str">"grid grid-cols-4 gap-4"</span>&gt;
-      &lt;div class=<span class="str">"stat-card"</span>&gt;{stats.contacts} Contacts&lt;/div&gt;
-      &lt;div class=<span class="str">"stat-card"</span>&gt;{stats.companies} Companies&lt;/div&gt;
-      &lt;div class=<span class="str">"stat-card"</span>&gt;{stats.active_deals} Active Deals&lt;/div&gt;
-      &lt;div class=<span class="str">"stat-card"</span>&gt;${stats.revenue} Revenue&lt;/div&gt;
-    &lt;/div&gt;
-    <span class="cmt">{{each recent_deals}}</span>
-    &lt;tr&gt;
-      &lt;td&gt;{title}&lt;/td&gt;
-      &lt;td&gt;{contact}&lt;/td&gt;
-      &lt;td&gt;${value}&lt;/td&gt;
-      &lt;td&gt;&lt;span class=<span class="str">"badge-{stage}"</span>&gt;{stage}&lt;/span&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    <span class="cmt">{{end}}</span>
-
-<span class="cmt"># CRUD actions with validation and htmx</span>
-<span class="kw">action</span> /contacts/create <span class="attr">method</span> POST
-  <span class="kw">validate</span>
-    <span class="prop">name</span>: required min 2
-    <span class="prop">email</span>: required, is email
-  <span class="kw">query</span>: INSERT INTO contact (name, email, phone, role, company)
-         VALUES (:name, :email, :phone, :role, :company)
-  <span class="kw">redirect</span> /contacts
-
-<span class="kw">action</span> /contacts/:id/delete <span class="attr">method</span> POST
-  <span class="kw">query</span>: DELETE FROM contact WHERE id = :id
-  <span class="kw">redirect</span> /contacts</pre>
-        </div>
-        <div class="example-note">
-          <p>The full CRM example is ~800 lines and includes layout with Tailwind CSS, sidebar navigation, deal pipeline, search, and responsive design. See the complete source on <a href="https://github.com/kilnx-org/kilnx" style="color:var(--accent)">GitHub</a>.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- Keywords Interactive -->
 <section id="keywords">
@@ -939,15 +711,11 @@ router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="fn
         <p class="section-label">Philosophy</p>
         <h2 class="section-title gradient-text" style="line-height:1.15">11 design<br>principles</h2>
         <p class="section-desc">
-          htmx completed HTML. Kilnx completes htmx. Every design decision
-          serves a single goal: make the backend as simple as the problem
-          demands, not as complex as the tools allow.
+          htmx completed HTML. Kilnx gives htmx the backend it assumes
+          already exists: raw declarations go in, a solid binary comes
+          out. Makes the backend as simple as the problem demands, not
+          as complex as the tools allow.
         </p>
-        <div class="philosophy-quote">
-          <span class="quote-mark">"</span>The kiln metaphor: raw
-          declarations go in, a solid binary comes out. The X suffix
-          creates visual kinship with htmx.<span class="quote-mark">"</span>
-        </div>
       </div>
       <div class="principles-list">
         <div class="principle"><span class="principle-num">00</span><span class="principle-text">The complexity is the tool's fault, not the problem's</span></div>
@@ -966,112 +734,6 @@ router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="fn
   </div>
 </section>
 
-<!-- Getting Started -->
-<section id="get-started">
-  <div class="container">
-    <div class="text-center" style="margin-bottom:4rem">
-      <p class="section-label">Get Started</p>
-      <h2 class="section-title gradient-text">From zero to running in 60 seconds</h2>
-    </div>
-
-    <div class="steps-grid">
-      <div class="step-card">
-        <div class="step-number">1</div>
-        <h3>Install</h3>
-        <div class="code-block">
-          <pre class="code-body" style="padding:1rem"><span class="cmt">$</span> brew install kilnx-org/tap/kilnx
-<span class="cmt"># or</span>
-<span class="cmt">$</span> curl -fsSL https://raw.githubusercontent.com/kilnx-org/kilnx/main/install.sh | sh</pre>
-        </div>
-      </div>
-      <div class="step-card">
-        <div class="step-number">2</div>
-        <h3>Write</h3>
-        <div class="code-block">
-          <pre class="code-body" style="padding:1rem"><span class="kw">page</span> /
-  <span class="str">"Hello World"</span></pre>
-        </div>
-      </div>
-      <div class="step-card">
-        <div class="step-number">3</div>
-        <h3>Run</h3>
-        <div class="code-block">
-          <pre class="code-body" style="padding:1rem"><span class="cmt">$</span> kilnx run app.kilnx
-<span class="str">Server running on http://localhost:8080</span></pre>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Deploy -->
-<section id="deploy">
-  <div class="container">
-    <div class="text-center" style="margin-bottom:4rem">
-      <p class="section-label">Deploy</p>
-      <h2 class="section-title gradient-text">The binary is the deploy</h2>
-    </div>
-
-    <div class="deploy-grid">
-      <div class="code-block" style="flex:1">
-        <div class="code-header"><span>Binary</span></div>
-        <pre class="code-body" style="padding:1rem"><span class="cmt">$</span> kilnx build app.kilnx -o server
-<span class="cmt">$</span> scp server you@host:~/
-<span class="cmt">$</span> ssh you@host <span class="str">"./server"</span></pre>
-      </div>
-      <div class="code-block" style="flex:1">
-        <div class="code-header"><span>Docker</span></div>
-        <pre class="code-body" style="padding:1rem"><span class="kw">FROM</span> ghcr.io/kilnx-org/kilnx <span class="kw">AS</span> build
-<span class="kw">COPY</span> app.kilnx .
-<span class="kw">RUN</span> kilnx build app.kilnx -o /server
-<span class="kw">FROM</span> alpine:3.21
-<span class="kw">COPY</span> --from=build /server /usr/local/bin/
-<span class="kw">CMD</span> [<span class="str">"server"</span>]</pre>
-      </div>
-      <div class="code-block" style="flex:1">
-        <div class="code-header"><span>Railway / Fly.io / Render</span></div>
-        <pre class="code-body" style="padding:1rem"><span class="cmt"># Just push. PORT is auto-detected.</span>
-<span class="cmt">$</span> git push railway main
-<span class="cmt">$</span> flyctl deploy
-<span class="cmt">$</span> render deploy</pre>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:2rem">
-      <a href="https://railway.com/deploy/kilnx" target="_blank" rel="noopener">
-        <img src="https://railway.com/button.svg" alt="Deploy on Railway" height="40">
-      </a>
-    </div>
-
-    <div style="margin-top:4rem">
-      <div class="cli-grid">
-        <div class="cli-card">
-          <code class="cli-cmd">kilnx run &lt;file&gt;</code>
-          <p>Development server with hot reload</p>
-        </div>
-        <div class="cli-card">
-          <code class="cli-cmd">kilnx build &lt;file&gt; -o myapp</code>
-          <p>Compile to standalone binary</p>
-        </div>
-        <div class="cli-card">
-          <code class="cli-cmd">kilnx test &lt;file&gt;</code>
-          <p>Run declarative tests</p>
-        </div>
-        <div class="cli-card">
-          <code class="cli-cmd">kilnx check &lt;file&gt;</code>
-          <p>Static analysis and security scan</p>
-        </div>
-        <div class="cli-card">
-          <code class="cli-cmd">kilnx migrate &lt;file&gt;</code>
-          <p>Apply database migrations from models</p>
-        </div>
-        <div class="cli-card">
-          <code class="cli-cmd">kilnx lsp</code>
-          <p>Language server for VS Code and Neovim</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- CTA -->
 <section id="cta">
@@ -1084,7 +746,7 @@ router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="fn
           Star the repo, join the community, or start building right now.
         </p>
         <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2rem">
-          <a href="#get-started" class="btn-primary">
+          <a href="https://github.com/kilnx-org/kilnx#installation" class="btn-primary">
             Get Started
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
           </a>
@@ -1168,22 +830,6 @@ router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="fn
   }
 
   selectKeyword("page");
-})();
-
-// Example tabs
-(function() {
-  var tabs = document.querySelectorAll(".example-tab");
-  tabs.forEach(function(tab) {
-    tab.addEventListener("click", function() {
-      tabs.forEach(function(t) { t.classList.remove("active"); });
-      tab.classList.add("active");
-      document.querySelectorAll(".example-panel").forEach(function(p) {
-        p.classList.remove("active");
-      });
-      var target = document.getElementById("example-" + tab.getAttribute("data-example"));
-      if (target) target.classList.add("active");
-    });
-  });
 })();
 </script>
 
