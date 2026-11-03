@@ -53,7 +53,7 @@
       <div class="anim">
         <span class="badge">
           <span class="badge-dot pulse"></span>
-          v0.1.0 &middot; AI-native
+          Open source &middot; MIT
         </span>
       </div>
 
@@ -119,7 +119,7 @@ app.post(<span class="str">'/tasks'</span>, auth, csrf,
 <span class="cmt">// session: built in.</span></pre>
         </div>
       </div>
-      <div class="hero-verdict">~480 LOC across 12 files &nbsp;&rarr;&nbsp; <strong>18 LOC in 1 file</strong></div>
+      <div class="hero-verdict">~480 LOC across 12 files &nbsp;&rarr;&nbsp; <strong>75 LOC in 1 file</strong>, auth pages included</div>
     </div>
   </div>
 </section>
@@ -131,7 +131,7 @@ app.post(<span class="str">'/tasks'</span>, auth, csrf,
       <p class="section-label">Before &amp; After</p>
       <h2 class="section-title gradient-text">Same app. Less everything.</h2>
       <p class="section-desc centered">
-        A task manager with auth, CRUD, and real-time updates.
+        A task manager with signup, login, password reset, and CRUD.
         One requires a stack. The other requires Kilnx.
       </p>
     </div>
@@ -201,12 +201,11 @@ router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="fn
         <div class="code-block glow">
           <div class="code-header">
             <span>app.kilnx</span>
-            <span style="color:var(--accent);font-weight:500">1 file, 40 lines</span>
+            <span style="color:var(--accent);font-weight:500">1 file, 75 lines, <a href="https://github.com/kilnx-org/examples/tree/main/tasks" style="color:inherit">runnable</a></span>
           </div>
-          <pre class="code-body"><span class="kw">config</span>
-  <span class="prop">database</span>: <span class="attr">env</span> DATABASE_URL <span class="attr">default</span> <span class="str">"sqlite://app.db"</span>
-  <span class="prop">port</span>: <span class="num">8080</span>
-  <span class="prop">secret</span>: <span class="attr">env</span> SECRET_KEY <span class="attr">required</span>
+          <pre class="code-body"><span class="kw">model</span> <span class="typ">user</span>
+  <span class="prop">email</span>: <span class="typ">email</span> <span class="attr">required</span> <span class="attr">unique</span>
+  <span class="prop">password</span>: password <span class="attr">required</span>
 
 <span class="kw">model</span> <span class="typ">task</span>
   <span class="prop">title</span>: <span class="typ">text</span> <span class="attr">required</span>
@@ -221,25 +220,73 @@ router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="fn
   <span class="prop">login</span>: /login
   <span class="prop">after login</span>: /tasks
 
+<span class="kw">page</span> /login
+  <span class="kw">html</span>
+    &lt;p&gt;{params.error}&lt;/p&gt;
+    &lt;form method="POST" action="/login"&gt;
+      &lt;input type="hidden" name="_csrf" value="{csrf}"&gt;
+      &lt;input name="identity" placeholder="Email"&gt;
+      &lt;input name="password" type="password" placeholder="Password"&gt;
+      &lt;button&gt;Log in&lt;/button&gt;
+    &lt;/form&gt;
+    &lt;a href="/register"&gt;Create an account&lt;/a&gt;
+
+<span class="kw">page</span> /register
+  <span class="kw">html</span>
+    &lt;p&gt;{params.error}&lt;/p&gt;
+    &lt;form method="POST" action="/register"&gt;
+      &lt;input type="hidden" name="_csrf" value="{csrf}"&gt;
+      &lt;input name="identity" placeholder="Email"&gt;
+      &lt;input name="password" type="password" placeholder="Password"&gt;
+      &lt;button&gt;Sign up&lt;/button&gt;
+    &lt;/form&gt;
+
+<span class="kw">page</span> /forgot-password
+  <span class="kw">html</span>
+    &lt;form method="POST" action="/forgot-password"&gt;
+      &lt;input type="hidden" name="_csrf" value="{csrf}"&gt;
+      &lt;input name="email" placeholder="Email"&gt;
+      &lt;button&gt;Send reset link&lt;/button&gt;
+    &lt;/form&gt;
+
+<span class="kw">page</span> /reset-password
+  <span class="kw">html</span>
+    &lt;form method="POST" action="/reset-password?token={params.token}"&gt;
+      &lt;input type="hidden" name="_csrf" value="{csrf}"&gt;
+      &lt;input name="password" type="password" placeholder="New password"&gt;
+      &lt;input name="password_confirm" type="password" placeholder="Repeat it"&gt;
+      &lt;button&gt;Reset password&lt;/button&gt;
+    &lt;/form&gt;
+
 <span class="kw">page</span> /tasks <span class="attr">requires auth</span>
   <span class="kw">query</span> <span class="fn">tasks</span>: SELECT id, title, done FROM task
-               WHERE owner = :current_user.id
-               ORDER BY created DESC
-               <span class="attr">paginate</span> <span class="num">20</span>
+               WHERE owner_id = :current_user.id
+               ORDER BY created DESC paginate 20
   <span class="kw">html</span>
-    &lt;h1&gt;My Tasks&lt;/h1&gt;
+    &lt;form method="POST" action="/tasks/new"&gt;
+      &lt;input type="hidden" name="_csrf" value="{csrf}"&gt;
+      &lt;input name="title" placeholder="New task"&gt;
+      &lt;button&gt;Add&lt;/button&gt;
+    &lt;/form&gt;
+    &lt;table&gt;
     <span class="cmt">{{each tasks}}</span>
-    &lt;div&gt;
-      &lt;span&gt;{title}&lt;/span&gt;
-      &lt;button <span class="attr">hx-post</span>=<span class="str">"/tasks/{id}/toggle"</span>&gt;Toggle&lt;/button&gt;
-    &lt;/div&gt;
+    &lt;tr&gt;
+      &lt;td&gt;{title}&lt;/td&gt;
+      &lt;td&gt;<span class="cmt">{{if done}}</span>Yes<span class="cmt">{{end}}</span>&lt;/td&gt;
+      &lt;td&gt;&lt;button <span class="attr">hx-post</span>=<span class="str">"/tasks/{id}/delete"</span> <span class="attr">hx-vals</span>=<span class="str">'{"_csrf":"{csrf}"}'</span>
+                  <span class="attr">hx-target</span>=<span class="str">"closest tr"</span> <span class="attr">hx-swap</span>=<span class="str">"outerHTML"</span>&gt;Delete&lt;/button&gt;&lt;/td&gt;
+    &lt;/tr&gt;
     <span class="cmt">{{end}}</span>
+    &lt;/table&gt;
 
-<span class="kw">action</span> /tasks/create <span class="attr">method</span> POST <span class="attr">requires auth</span>
+<span class="kw">action</span> /tasks/new <span class="attr">requires auth</span>
   <span class="kw">validate</span> task
-  <span class="kw">query</span>: INSERT INTO task (title, owner)
-         VALUES (:title, :current_user.id)
-  <span class="kw">redirect</span> /tasks</pre>
+  <span class="prop">query</span>: INSERT INTO task (title, owner_id) VALUES (:title, :current_user.id)
+  <span class="kw">redirect</span> /tasks
+
+<span class="kw">action</span> /tasks/:id/delete <span class="attr">requires auth</span>
+  <span class="prop">query</span>: DELETE FROM task WHERE id = :id AND owner_id = :current_user.id
+  <span class="kw">respond</span> fragment delete</pre>
         </div>
       </div>
     </div>
@@ -267,7 +314,7 @@ router.<span class="fn">get</span>(<span class="str">'/'</span>, <span class="fn
         <div class="stat-values">
           <span class="stat-before">~480</span>
           <span class="stat-arrow"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></span>
-          <span class="stat-after">40</span>
+          <span class="stat-after">75</span>
         </div>
       </div>
       <div class="stat-card">
